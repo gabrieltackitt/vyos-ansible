@@ -75,8 +75,8 @@ ethernet:
 #      sg: <true | false>
 #      tso: <true | false>
 #    xdp: <true | false> # WARNING: HIGHLY EXPERIMENTAL FEATURE 
-#    eapol:
-#      ca-certificate: <name>
+#    eapol:   ### NOT YET IMPLEMENTED
+#      ca_certificate: <name>
 #      certificate: <name>
 
 
