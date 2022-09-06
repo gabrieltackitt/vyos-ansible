@@ -1,0 +1,9 @@
+- name: Configure Dummy Interfaces
+  vyos_config:
+    src: dum.j2
+  when:
+    - dummy is defined
+  tags:
+    - dummy
+    - dummy_v4
+    - dummy_v6
