@@ -18,7 +18,7 @@
       |
     state: present
 
-- name: Update login banner
+- name: Update Pre-Login banner
   vyos_banner:
     banner: pre-login
     text: |
