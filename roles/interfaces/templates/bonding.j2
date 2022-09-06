@@ -1,6 +1,20 @@
-{% for bond in bondernet %}
+{% for bond in bonding %}
 {% if bond['vlan'] is not defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} description {{ bond['desc'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} mode {{ bond['bonding_mode'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} min-links {{ bond['bond_min_links'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} lacp-rate {{ bond['bond_lacp_rate'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} hash-policy {{ bond['bond_hash_policy'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} primary {{ bond['bond_primary_interface'] }}
+{% if bond['bond_arp_monitor_interval'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} arp-monitor interval {{ bond['bond_arp_monitor_interval'] }}
+{% for target in bond['bond_arp_monitor_target_address'] %}
+	set interfaces bonding {{ bond['vyos_if'] }} arp monitor target {{ target }}
+{% endfor %}
+{% endif %}
+{% for member in bond['members'] %}
+set interfaces bonding {{ bond['vyos_if'] }} member interface {{ member }}
+{% endfor %}
 {% if bond['enabled'] is sameas false %}
 	set interfaces bonding {{ bond['vyos_if'] }} disable
 {% else %}
@@ -12,23 +26,6 @@
 {% if bond['mac'] is defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} mac '{{ bond['mac'] }}'
 {% endif %}
-{% if bond['duplex'] == 'auto' %}
-	set interfaces bonding {{ bond['vyos_if'] }} duplex 'auto'
-{% endif %}
-{% if bond['duplex'] == 'full' %}
-	set interfaces bonding {{ bond['vyos_if'] }} duplex 'full'
-{% endif %}
-{% if bond['duplex'] == 'half' %}
-	set interfaces bonding {{ bond['vyos_if'] }} duplex 'half'
-{% endif %}
-{% if bond['duplex'] is not defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} duplex 'auto'
-{% endif %}
-{% if bond['speed'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} speed '{{ bond['speed'] }}'
-{% else %}
-	set interfaces bonding {{ bond['vyos_if'] }} speed 'auto'
-{% endif %}
 {% if bond['mtu'] is defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} mtu {{ bond['mtu'] }}
 {% endif %}
@@ -39,7 +36,12 @@
 	set interfaces bonding {{ bond['vyos_if'] }} address '{{ bond['ipv6_addr'] }}'
 {% endif %}
 {% if bond['mirror'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} mirror ingress'{{ bond['mirror'] }}'
+{% if bond['mirror']['ingress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mirror ingress '{{ bond['mirror']['ingress'] }}'
+{% endif %}
+{% if bond['mirror']['egress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mirror egress '{{ bond['mirror']['egress'] }}'
+{% endif %}
 {% endif %}
 {% if bond['ipv6_addr_autoconf'] is sameas true %}
 	set interfaces bonding {{ bond['vyos_if'] }} ipv6 address autoconf
@@ -130,6 +132,14 @@
 	delete interfaces bonding {{ bond['vyos_if'] }} ip proxy_arp_pvlan
 {% endif %}
 {% endif %}
+
+{% if bond['disable_arp_filter'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+{% if bond['disable_arp_filter'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+
 {% if bond['source_validation_mode'] is defined %}
 {% if bond['source_validation_mode'] == 'strict' %}
 	set interfaces bonding {{ bond['vyos_if'] }} ip source-validation strict
@@ -220,38 +230,6 @@
 	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
 {% endfor %}
 {% endif %}
-{% if bond['offloading'] is defined %}
-{% if bond['offloading']['gro'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload gro
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload gro
-{% endif %}
-{% if bond['offloading']['gso'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload gso
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload gso
-{% endif %}
-{% if bond['offloading']['lro'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload lro
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload lro
-{% endif %}
-{% if bond['offloading']['lrs'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload rps
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload rps
-{% endif %}
-{% if bond['offloading']['sg'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload sg
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload sg
-{% endif %}
-{% if bond['offloading']['tso'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} offload tso
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} offload tso
-{% endif %}
-{% endif %}
 {% if bond['xdp'] is defined %}
 {% if bond['xdp'] == true %}
 	set interfaces bonding {{ bond['vyos_if'] }} xdp
@@ -260,18 +238,23 @@
 	delete interfaces bonding {{ bond['vyos_if'] }} xdp
 {% endif %}
 {% endif %}
-{% if bond['eapol'] is defined %}
-{% if bond['eapol']['ca_certificate'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} eapol ca-certificate {{ bond['eapol']['ca_certificate'] }}
-{% endif %}
-{% if bond['eapol']['certificate'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} eapol certificate {{ bond['eapol']['certificate'] }}
-{% endif %}
-{% endif %}
 {% endif %}
 
 {% if bond['vlan'] is  defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} description {{ bond['desc'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mode {{ bond['bonding_mode'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} min-links {{ bond['bond_min_links'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} lacp-rate {{ bond['bond_lacp_rate'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} hash-policy {{ bond['bond_hash_policy'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} primary {{ bond['bond_primary_interface'] }}
+{% if bond['bond_arp_monitor_interval'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} arp-monitor interval {{ bond['bond_arp_monitor_interval'] }}
+{% for target in bond['bond_arp_monitor_target_address'] %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} arp monitor target {{ target }}
+{% endfor %}
+{% endif %}
+{% for member in bond['members'] %}
+set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} member interface {{ member }}
 {% if bond['enabled'] is sameas false %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable
 {% else %}
@@ -283,23 +266,6 @@
 {% if bond['mac'] is defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mac '{{ bond['mac'] }}'
 {% endif %}
-{% if bond['duplex'] == 'auto' %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} duplex 'auto'
-{% endif %}
-{% if bond['duplex'] == 'full' %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} duplex 'full'
-{% endif %}
-{% if bond['duplex'] == 'half' %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} duplex 'half'
-{% endif %}
-{% if bond['duplex'] is not defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} duplex 'auto'
-{% endif %}
-{% if bond['speed'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} speed '{{ bond['speed'] }}'
-{% else %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} speed 'auto'
-{% endif %}
 {% if bond['mtu'] is defined %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mtu {{ bond['mtu'] }}
 {% endif %}
@@ -310,7 +276,12 @@
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} address '{{ bond['ipv6_addr'] }}'
 {% endif %}
 {% if bond['mirror'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mirror '{{ bond['mirror'] }}'
+{% if bond['mirror']['ingress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mirror ingress '{{ bond['mirror']['ingress'] }}'
+{% endif %}
+{% if bond['mirror']['egress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mirror egress '{{ bond['mirror']['egress'] }}'
+{% endif %}
 {% endif %}
 {% if bond['ipv6_addr_autoconf'] is sameas true %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 address autoconf
@@ -400,6 +371,12 @@
 {% if bond['proxy_arp_pvlan'] is sameas false %}
 	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip proxy_arp_pvlan
 {% endif %}
+{% endif %}
+{% if bond['disable_arp_filter'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-arp-filter
+{% endif %}
+{% if bond['disable_arp_filter'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-arp-filter
 {% endif %}
 {% if bond['source_validation_mode'] is defined %}
 {% if bond['source_validation_mode'] == 'strict' %}
@@ -491,38 +468,6 @@
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
 {% endfor %}
 {% endif %}
-{% if bond['offloading'] is defined %}
-{% if bond['offloading']['gro'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload gro
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload gro
-{% endif %}
-{% if bond['offloading']['gso'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload gso
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload gso
-{% endif %}
-{% if bond['offloading']['lro'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload lro
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload lro
-{% endif %}
-{% if bond['offloading']['lrs'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload rps
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload rps
-{% endif %}
-{% if bond['offloading']['sg'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload sg
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload sg
-{% endif %}
-{% if bond['offloading']['tso'] == true %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload tso
-{% else %}
-	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} offload tso
-{% endif %}
-{% endif %}
 {% if bond['xdp'] is defined %}
 {% if bond['xdp'] == true %}
 	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} xdp
@@ -531,14 +476,7 @@
 	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} xdp
 {% endif %}
 {% endif %}
-{% if bond['eapol'] is defined %}
-{% if bond['eapol']['ca_certificate'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} eapol ca-certificate {{ bond['eapol']['ca_certificate'] }}
-{% endif %}
-{% if bond['eapol']['certificate'] is defined %}
-	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} eapol certificate {{ bond['eapol']['certificate'] }}
 {% endif %}
 {% endif %}
 {% endif %}
-
 {% endfor %}
