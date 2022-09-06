@@ -1,0 +1,482 @@
+{% for bond in bonding %}
+{% if bond['vlan'] is not defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} description {{ bond['desc'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} mode {{ bond['bonding_mode'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} min-links {{ bond['bond_min_links'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} lacp-rate {{ bond['bond_lacp_rate'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} hash-policy {{ bond['bond_hash_policy'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} primary {{ bond['bond_primary_interface'] }}
+{% if bond['bond_arp_monitor_interval'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} arp-monitor interval {{ bond['bond_arp_monitor_interval'] }}
+{% for target in bond['bond_arp_monitor_target_address'] %}
+	set interfaces bonding {{ bond['vyos_if'] }} arp monitor target {{ target }}
+{% endfor %}
+{% endif %}
+{% for member in bond['members'] %}
+set interfaces bonding {{ bond['vyos_if'] }} member interface {{ member }}
+{% endfor %}
+{% if bond['enabled'] is sameas false %}
+	set interfaces bonding {{ bond['vyos_if'] }} disable
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} disable
+{% endif %}
+{% if bond['vrf'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vrf {{ bond['vrf'] }}
+{% endif %}
+{% if bond['mac'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mac '{{ bond['mac'] }}'
+{% endif %}
+{% if bond['mtu'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mtu {{ bond['mtu'] }}
+{% endif %}
+{% if bond['ipv4'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} address '{{ bond['ipv4_addr'] }}'
+{% endif %}
+{% if bond['ipv6'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} address '{{ bond['ipv6_addr'] }}'
+{% endif %}
+{% if bond['mirror'] is defined %}
+{% if bond['mirror']['ingress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mirror ingress '{{ bond['mirror']['ingress'] }}'
+{% endif %}
+{% if bond['mirror']['egress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} mirror egress '{{ bond['mirror']['egress'] }}'
+{% endif %}
+{% endif %}
+{% if bond['ipv6_addr_autoconf'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 address autoconf
+{% endif %}
+{% if bond['ipv6_eui64_prefix'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 address eui64 '{{ bond['ipv6_eui64_prefix'] }}'
+{% endif %}
+{% if bond['disable_flow_control'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} disable-flow-control
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} disable-flow-control
+{% endif %}
+{% if bond['disable_link_detect'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} disable-link-detect
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} disable-link-detect
+{% endif %}
+{% if bond['ipv4_disable_forwarding'] is defined %}
+{% if bond['ipv4_disable_forwarding'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% if bond['ipv4_disable_forwarding'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% endif %}
+{% if bond['disable_flow_control'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} disable-flow-control
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} disable-flow-control
+{% endif %}
+{% if bond['ipv4_adjust_mss'] is defined %}
+{% if bond['ipv4_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip adjust-mss {{ bond['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if bond['arp_cache_timeout'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip arp-cache-timeout '{{ bond['arp_cache_timeout'] }}'
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip arp-cache-timeout 30
+{% endif %}
+{% if bond['enable_directed_broadcast'] is defined %}
+{% if bond['enable_directed_broadcast'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip enable-directed-broadcast
+{% endif %}
+{% if bond['enable_directed_broadcast'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip enable-directed-broadcast
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_accept'] is defined %}
+{% if bond['enable_arp_accept'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-accept
+{% endif %}
+{% if bond['enable_arp_accept'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-accemt
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_announce'] is defined %}
+{% if bond['enable_arp_announce'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% if bond['enable_arp_announce'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_ignore'] is defined %}
+{% if bond['enable_arp_ignore'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% if bond['enable_arp_ignore'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% endif %}
+{% if bond['enable_proxy_arp'] is defined %}
+{% if bond['enable_proxy_arp'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% if bond['enable_proxy_arp'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% endif %}
+{% if bond['proxy_arp_pvlan'] is defined %}
+{% if bond['proxy_arp_pvlan'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip proxy_arp_pvlan
+{% endif %}
+{% if bond['proxy_arp_pvlan'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip proxy_arp_pvlan
+{% endif %}
+{% endif %}
+
+{% if bond['disable_arp_filter'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+{% if bond['disable_arp_filter'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+
+{% if bond['source_validation_mode'] is defined %}
+{% if bond['source_validation_mode'] == 'strict' %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip source-validation strict
+{% endif %}
+{% if bond['source_validation_mode'] == 'loose' %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip source-validation loose
+{% endif %}
+{% if bond['source_validation_mode'] == 'disable' %}
+	set interfaces bonding {{ bond['vyos_if'] }} ip source-validation disable
+{% endif %}
+{% endif %}
+{% if bond['ipv6_no_default_link_local'] is defined %}
+{% if bond['ipv6_no_default_link_local'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% if bond['ipv6_no_default_link_local'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% endif %}
+{% if bond['ipv6_disable_forwarding'] is defined %}
+{% if bond['ipv6_disable_forwarding'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% if bond['ipv6_disable_forwarding'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% endif %}
+{% if bond['ipv6_adjust_mss'] is defined %}
+{% if bond['ipv6_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} ipv6 adjust-mss {{ bond['ipv6_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if bond['dhcp_options'] is defined %}
+{% if bond['dhcp_options']['client_id'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options client-id '{{ bond['dhcp_options']['client_id'] }}'
+{% endif %}
+{% if bond['dhcp_options']['host_name'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options host-name '{{ bond['dhcp_options']['host_name'] }}'
+{% endif %}
+{% if bond['dhcp_options']['vendor_class_id'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options vendor-class-id '{{ bond['dhcp_options']['vendor_class_id'] }}'
+{% endif %}
+{% if bond['dhcp_options']['no-default-route'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options no-default-route
+{% endif %}
+{% if bond['dhcp_options']['default_route_distance'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options default-route-distance '{{ bond['dhcp_options']['default_route_distance'] }}'
+{% endif %}
+{% if bond['dhcp_options']['reject'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcp-options reject '{{ bond['dhcp_options']['reject'] }}'
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options'] is defined %}
+{% if bond['dhcpv6_options']['duid'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options duid '{{ bond['dhcpv6_options']['duid'] }}'
+{% endif %}
+{% if bond['dhcpv6_options']['parameters_only'] is defined %}
+{% if bond['dhcpv6_options']['parameters_only'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options parameters-only
+{% endif %}
+{% if bond['dhcpv6_options']['parameters_only'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options parameters-only
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['rapid_commit'] is defined %}
+{% if bond['dhcpv6_options']['rapid_commit'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% if bond['dhcpv6_options']['rapid_commit'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['temporary'] is defined %}
+{% if bond['dhcpv6_options']['temporary'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options temporary
+{% endif %}
+{% if bond['dhcpv6_options']['temporary'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} dhcpv6-options temporary
+{% endif %}
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['prefix_delegation'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6_options pd {{ bond['dhcpv6_options']['prefix_delegation']['pd]'] }} length {{ bond['dhcpv6_options']['prefix_delegation']['length'] }}
+{% for delegate in bond['dhcpv6_options']['prefix_delegation']['delegate_prefix']  %}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} sla-id {{ delegate['sla_id'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
+{% endfor %}
+{% endif %}
+{% if bond['xdp'] is defined %}
+{% if bond['xdp'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} xdp
+{% endif %}
+{% if bond['xdp'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} xdp
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% if bond['vlan'] is  defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} description {{ bond['desc'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mode {{ bond['bonding_mode'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} min-links {{ bond['bond_min_links'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} lacp-rate {{ bond['bond_lacp_rate'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} hash-policy {{ bond['bond_hash_policy'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} primary {{ bond['bond_primary_interface'] }}
+{% if bond['bond_arp_monitor_interval'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} arp-monitor interval {{ bond['bond_arp_monitor_interval'] }}
+{% for target in bond['bond_arp_monitor_target_address'] %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} arp monitor target {{ target }}
+{% endfor %}
+{% endif %}
+{% for member in bond['members'] %}
+set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} member interface {{ member }}
+{% if bond['enabled'] is sameas false %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable
+{% endif %}
+{% if bond['vrf'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} vrf {{ bond['vrf'] }}
+{% endif %}
+{% if bond['mac'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mac '{{ bond['mac'] }}'
+{% endif %}
+{% if bond['mtu'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mtu {{ bond['mtu'] }}
+{% endif %}
+{% if bond['ipv4'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} address '{{ bond['ipv4_addr'] }}'
+{% endif %}
+{% if bond['ipv6'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} address '{{ bond['ipv6_addr'] }}'
+{% endif %}
+{% if bond['mirror'] is defined %}
+{% if bond['mirror']['ingress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mirror ingress '{{ bond['mirror']['ingress'] }}'
+{% endif %}
+{% if bond['mirror']['egress'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} mirror egress '{{ bond['mirror']['egress'] }}'
+{% endif %}
+{% endif %}
+{% if bond['ipv6_addr_autoconf'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 address autoconf
+{% endif %}
+{% if bond['ipv6_eui64_prefix'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 address eui64 '{{ bond['ipv6_eui64_prefix'] }}'
+{% endif %}
+{% if bond['disable_flow_control'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-flow-control
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-flow-control
+{% endif %}
+{% if bond['disable_link_detect'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-link-detect
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-link-detect
+{% endif %}
+{% if bond['ipv4_disable_forwarding'] is defined %}
+{% if bond['ipv4_disable_forwarding'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-forwarding
+{% endif %}
+{% if bond['ipv4_disable_forwarding'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-forwarding
+{% endif %}
+{% endif %}
+{% if bond['disable_flow_control'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-flow-control
+{% else %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} disable-flow-control
+{% endif %}
+{% if bond['ipv4_adjust_mss'] is defined %}
+{% if bond['ipv4_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip adjust-mss {{ bond['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if bond['arp_cache_timeout'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip arp-cache-timeout '{{ bond['arp_cache_timeout'] }}'
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip arp-cache-timeout 30
+{% endif %}
+{% if bond['enable_directed_broadcast'] is defined %}
+{% if bond['enable_directed_broadcast'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-directed-broadcast
+{% endif %}
+{% if bond['enable_directed_broadcast'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-directed-broadcast
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_accept'] is defined %}
+{% if bond['enable_arp_accept'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-accept
+{% endif %}
+{% if bond['enable_arp_accept'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-accemt
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_announce'] is defined %}
+{% if bond['enable_arp_announce'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-announce
+{% endif %}
+{% if bond['enable_arp_announce'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-announce
+{% endif %}
+{% endif %}
+{% if bond['enable_arp_ignore'] is defined %}
+{% if bond['enable_arp_ignore'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-ignore
+{% endif %}
+{% if bond['enable_arp_ignore'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-arp-ignore
+{% endif %}
+{% endif %}
+{% if bond['enable_proxy_arp'] is defined %}
+{% if bond['enable_proxy_arp'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-proxy-arp
+{% endif %}
+{% if bond['enable_proxy_arp'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip enable-proxy-arp
+{% endif %}
+{% endif %}
+{% if bond['proxy_arp_pvlan'] is defined %}
+{% if bond['proxy_arp_pvlan'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip proxy_arp_pvlan
+{% endif %}
+{% if bond['proxy_arp_pvlan'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip proxy_arp_pvlan
+{% endif %}
+{% endif %}
+{% if bond['disable_arp_filter'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-arp-filter
+{% endif %}
+{% if bond['disable_arp_filter'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip disable-arp-filter
+{% endif %}
+{% if bond['source_validation_mode'] is defined %}
+{% if bond['source_validation_mode'] == 'strict' %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip source-validation strict
+{% endif %}
+{% if bond['source_validation_mode'] == 'loose' %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip source-validation loose
+{% endif %}
+{% if bond['source_validation_mode'] == 'disable' %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ip source-validation disable
+{% endif %}
+{% endif %}
+{% if bond['ipv6_no_default_link_local'] is defined %}
+{% if bond['ipv6_no_default_link_local'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 address no-default-link-local
+{% endif %}
+{% if bond['ipv6_no_default_link_local'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 address no-default-link-local
+{% endif %}
+{% endif %}
+{% if bond['ipv6_disable_forwarding'] is defined %}
+{% if bond['ipv6_disable_forwarding'] is sameas true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 disable-forwarding
+{% endif %}
+{% if bond['ipv6_disable_forwarding'] is sameas false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 disable-forwarding
+{% endif %}
+{% endif %}
+{% if bond['ipv6_adjust_mss'] is defined %}
+{% if bond['ipv6_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} ipv6 adjust-mss {{ bond['ipv6_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if bond['dhcp_options'] is defined %}
+{% if bond['dhcp_options']['client_id'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options client-id '{{ bond['dhcp_options']['client_id'] }}'
+{% endif %}
+{% if bond['dhcp_options']['host_name'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options host-name '{{ bond['dhcp_options']['host_name'] }}'
+{% endif %}
+{% if bond['dhcp_options']['vendor_class_id'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options vendor-class-id '{{ bond['dhcp_options']['vendor_class_id'] }}'
+{% endif %}
+{% if bond['dhcp_options']['no-default-route'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options no-default-route
+{% endif %}
+{% if bond['dhcp_options']['default_route_distance'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options default-route-distance '{{ bond['dhcp_options']['default_route_distance'] }}'
+{% endif %}
+{% if bond['dhcp_options']['reject'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcp-options reject '{{ bond['dhcp_options']['reject'] }}'
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options'] is defined %}
+{% if bond['dhcpv6_options']['duid'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options duid '{{ bond['dhcpv6_options']['duid'] }}'
+{% endif %}
+{% if bond['dhcpv6_options']['parameters_only'] is defined %}
+{% if bond['dhcpv6_options']['parameters_only'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options parameters-only
+{% endif %}
+{% if bond['dhcpv6_options']['parameters_only'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options parameters-only
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['rapid_commit'] is defined %}
+{% if bond['dhcpv6_options']['rapid_commit'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% if bond['dhcpv6_options']['rapid_commit'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['temporary'] is defined %}
+{% if bond['dhcpv6_options']['temporary'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options temporary
+{% endif %}
+{% if bond['dhcpv6_options']['temporary'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6-options temporary
+{% endif %}
+{% endif %}
+{% endif %}
+{% if bond['dhcpv6_options']['prefix_delegation'] is defined %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6_options pd {{ bond['dhcpv6_options']['prefix_delegation']['pd]'] }} length {{ bond['dhcpv6_options']['prefix_delegation']['length'] }}
+{% for delegate in bond['dhcpv6_options']['prefix_delegation']['delegate_prefix']  %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} sla-id {{ delegate['sla_id'] }}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
+{% endfor %}
+{% endif %}
+{% if bond['xdp'] is defined %}
+{% if bond['xdp'] == true %}
+	set interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} xdp
+{% endif %}
+{% if bond['xdp'] == false %}
+	delete interfaces bonding {{ bond['vyos_if'] }} vif {{ bond['vlan'] }} xdp
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}

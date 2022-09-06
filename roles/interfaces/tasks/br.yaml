@@ -1,0 +1,9 @@
+- name: Configure Bridge Interfaces
+  vyos_config:
+    src: br.j2
+  when:
+    - bridge is defined
+  tags:
+    - bridge
+    - bridge_v4
+    - bridge_v6

@@ -1,0 +1,203 @@
+---
+# host_vars complete template
+#
+#    You can define all the variables for a host in this file, 
+#    or use the template folder structure and define individual 
+#    portions in separate files. Template folders are included
+#    that follows the correct folder/file structure, template_1
+#    separates variables by purpose, eg. interfaces, routing,
+#    firewall, etc. Template_2 separates variables more granularly
+#    e.g. ethernets, bonding, bgp, ospf, etc. These templates can
+#    be mixed and matched, just be sure to not define a variable
+#    in more than one place, otherwise unexpected behavior can
+#    occur.
+#
+---
+
+### ETHERNET CONFIGURATIONS ###
+
+ethernet:
+  - vyos_if: <interface name>
+    vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
+    enabled: <true | false>
+#    vrf: <default | vrf>
+    desc: <interface description>
+#    duplex: <auto | full | half> # Defaults to auto if not defined
+#    speed:  <auto | 10 | 100 | 1000 | 2500 | 5000 | 10000 | 25000 | 40000 | 50000 | 100000> # Defaults to auto if not defined
+    ipv4: <true | false>
+    ipv4_addr: <address | dhcp>
+    ipv6: <true | false>
+    ipv6_addr: <address | dhcpv6>
+#    mirror: <interface> # Mirror all inbound traffic to this interface
+#    ipv6_addr_autoconf: <true | false> # This disables IPv6 forwarding for this interface
+#    ipv6_eui64_prefix: <prefix>
+#    mac: <xx:xx:xx:xx:xx:xx>
+#    mtu: <MTU>
+#    disable_flow_control: <true | false>
+#    disable_link_detect: <true | false>
+#    ipv4_disable_forwarding: <true | false>
+#    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    arp_cache_timeout: 30 # time-in-seconds
+#    enable_directed_broadcast: <true | false>
+#    enable_arp_accept: <true | false>
+#    enable_arp_announce: <true | false>
+#    enable_arp_ignore: <true | false>
+#    enable_proxy_arp: <true | false>
+#    proxy_arp_pvlan: <true | false>
+#    source_validation_mode: <strict | loose | disable>
+#    ipv6_no_default_link_local: <true | false>
+#    ipv6_disable_forwarding: <true | false>
+#    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    dhcp_options:
+#      client_id: <description>
+#      host_name: <hostname> # only define if you want to set an alternative hostname to be used for DHCPv6 packets
+#      vendor_class_id: <vendor-id>
+#      no_default_route: <true | false>
+#      default_route_distance: 100
+#      reject: <address | cidr>
+#    dhcpv6_options:
+#      duid: <duid>
+#      parameters_only: <true | false>
+#      rapid_commit: <true | false>
+#      temporary: <true | false>
+#      prefix_delegation:
+#        pd: <ID>
+#        length: <length>
+#        delegate_prefix:
+#          sla_id: 
+#          delegate_interface: <interface to delegate prefix to>
+#          address: <address for delegated prefix> # These three parameters can be specified multiple times
+#    offloading: # Enable hardware offloading (must be supported by hardware)
+#      gro: <true | false>
+#      gso: <true | false>
+#      lro: <true | false>
+#      rps: <true | false>
+#      sg: <true | false>
+#      tso: <true | false>
+#    xdp: <true | false> # WARNING: HIGHLY EXPERIMENTAL FEATURE 
+#    eapol:   ### NOT YET IMPLEMENTED
+#      ca_certificate: <name>
+#      certificate: <name>
+
+
+### BONDING CONFIGURATION ###
+
+bonding:
+  - vyos_if: <interface name>
+    vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
+    enabled: <true | false>
+#    vrf: <default | vrf>
+    desc: <interface description>
+    members:
+      - <list members, one per line>
+    bonding_mode: <802.3ad | active-backup | broadcast | round-robin | transmit-load-balance | adaptive-load-balance | xor-hash>
+    bond_min_links: <0-16>
+    bond_lacp_rate: <slow | fast>
+    bond_hash_policy: <layer2 | layer2+3 | layer 3+4>
+    bond_primary_interface: <ethernet interface>
+    bond_arp_monitor_interval: <time in seconds>
+    bond_arp_monitor_target_address:
+      - <arp target address>
+    ipv4: <true | false>
+    ipv4_addr: <address | dhcp>
+    ipv6: <true | false>
+    ipv6_addr: <address | dhcpv6>
+    mirror: # Mirror all inbound traffic to this interface
+      ingress: <interface>
+      egress: <interface>
+#    ipv6_addr_autoconf: <true | false> # This disables IPv6 forwarding for this interface
+#    ipv6_eui64_prefix: <prefix>
+#    mac: <xx:xx:xx:xx:xx:xx>
+#    mtu: <MTU>
+#    disable_flow_control: <true | false>
+#    disable_link_detect: <true | false>
+#    ipv4_disable_forwarding: <true | false>
+#    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    arp_cache_timeout: 30 # time-in-seconds
+#    enable_directed_broadcast: <true | false>
+#    enable_arp_accept: <true | false>
+#    enable_arp_announce: <true | false>
+#    enable_arp_ignore: <true | false>
+#    enable_proxy_arp: <true | false>
+#    proxy_arp_pvlan: <true | false>
+#    disable_arp_filter: <true | false>
+#    source_validation_mode: <strict | loose | disable>
+#    ipv6_no_default_link_local: <true | false>
+#    ipv6_disable_forwarding: <true | false>
+#    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    dhcp_options:
+#      client_id: <description>
+#      host_name: <hostname> # only define if you want to set an alternative hostname to be used for DHCPv6 packets
+#      vendor_class_id: <vendor-id>
+#      no_default_route: <true | false>
+#      default_route_distance: 100
+#      reject: <address | cidr>
+#    dhcpv6_options:
+#      duid: <duid>
+#      parameters_only: <true | false>
+#      rapid_commit: <true | false>
+#      temporary: <true | false>
+#      prefix_delegation:
+#        pd: <ID>
+#        length: <length>
+#        delegate_prefix:
+#          sla_id: 
+#          delegate_interface: <interface to delegate prefix to>
+#          address: <address for delegated prefix> # These three parameters can be specified multiple times
+#    xdp: <true | false> # WARNING: HIGHLY EXPERIMENTAL FEATURE 
+
+### OPENVPN CONFIGURATION ###
+
+openvpn:
+
+### PPPoE CONFIGURATION ###
+
+pppoe:
+
+### BRIDGE CONFIGURATIONS ###
+
+bridge:
+
+### DUMMY CONFIGURATIONS ###
+
+dummy: 
+
+### TUNNEL CONFIGURATIONS ###
+
+tunnel:
+
+### WIREGUARD CONFIGURATIONS ###
+
+wireguard:
+
+### VXLAN CONFIGURATION ###
+
+vxlan:
+
+### WLAN/WIFI CONFIGURATION ###
+
+wlan:
+
+### WWAN CONFIGURATION ###
+
+wwan:
+
+### GENEVE CONFIGURATION ###
+
+geneve:
+
+### L2TPv3 CONFIGURATION ###
+
+l2tpv3:
+
+### Loopback CONFIGURATION ###
+
+loopback: 
+
+### MACSEC CONFIGURATION ###
+
+macsec:
+
+### VTI CONFIGURATION ###
+
+vti:

@@ -1,0 +1,11 @@
+{% for dummy in dummy %}
+{% if dummy['enabled'] is sameas True %}
+set interfaces dummy {{ dummy['vyos_if'] }} description '{{ dummy['desc'] }}'
+{% if bridge['ipv4'] is sameas true %}
+set interfaces dummy {{ dummy['vyos_if'] }} address {{ dummy['ipv4_addr'] }}
+{% endif %}
+{% if dummy['ipv6'] is sameas true %}
+set interfaces dummy {{ dummy['vyos_if'] }} address {{ dummy['ipv6_addr'] }}
+{% endif %}
+{% endif %}
+{% endfor %}

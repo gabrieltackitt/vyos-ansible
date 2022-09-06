@@ -1,2 +1,10 @@
 ---
 # Interfaces Task List
+- name: 'Configure Ethernet Interfaces'
+  include_tasks: ethernet.yaml
+
+- name: 'Configure Bridge Interfaces'
+  include: br.yaml
+
+- name: 'Configure Dummy Interfaces'
+  include_tasks: dum.yaml

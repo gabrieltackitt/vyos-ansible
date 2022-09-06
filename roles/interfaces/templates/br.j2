@@ -1,0 +1,26 @@
+{% for bridge in bridge %}
+{% if bridge['enabled'] is sameas True %}
+set interfaces bridge {{ bridge['vyos_if'] }} description '{{ bridge['desc'] }}'
+{% if bridge['ipv4'] is sameas true %}
+set interfaces bridge {{ bridge['vyos_if'] }} address {{ bridge['ipv4_addr'] }}
+{% endif %}
+{% if bridge['ipv6'] is sameas true %}
+set interfaces bridge {{ bridge['vyos_if'] }} address {{ bridge['ipv6_addr'] }}
+{% endif %}
+{% if bridge['member1'] is defined %}
+set interfaces bridge {{ bridge['vyos_if'] }} member interface {{ bridge['member1'] }}
+{% endif %}
+{% if bridge['member2'] is defined %}
+set interfaces bridge {{ bridge['vyos_if'] }} member interface {{ bridge['member2'] }}
+{% endif %}
+{% if bridge['member3'] is defined %}
+set interfaces bridge {{ bridge['vyos_if'] }} member interface {{ bridge['member3'] }}
+{% endif %}
+{% if bridge['member4'] is defined %}
+set interfaces bridge {{ bridge['vyos_if'] }} member interface {{ bridge['member4'] }}
+{% endif %}
+{% if bridge['member5'] is defined %}
+set interfaces bridge {{ bridge['vyos_if'] }} member interface {{ bridge['member5'] }}
+{% endif %}
+{% endif %}
+{% endfor %}

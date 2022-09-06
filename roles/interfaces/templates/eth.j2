@@ -1,0 +1,544 @@
+{% for eth in ethernet %}
+{% if eth['vlan'] is not defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} description {{ eth['desc'] }}
+{% if eth['enabled'] is sameas false %}
+	set interfaces ethernet {{ eth['vyos_if'] }} disable
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} disable
+{% endif %}
+{% if eth['vrf'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vrf {{ eth['vrf'] }}
+{% endif %}
+{% if eth['mac'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} mac '{{ eth['mac'] }}'
+{% endif %}
+{% if eth['duplex'] == 'auto' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'auto'
+{% endif %}
+{% if eth['duplex'] == 'full' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'full'
+{% endif %}
+{% if eth['duplex'] == 'half' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'half'
+{% endif %}
+{% if eth['duplex'] is not defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'auto'
+{% endif %}
+{% if eth['speed'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} speed '{{ eth['speed'] }}'
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} speed 'auto'
+{% endif %}
+{% if eth['mtu'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} mtu {{ eth['mtu'] }}
+{% endif %}
+{% if eth['ipv4'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} address '{{ eth['ipv4_addr'] }}'
+{% endif %}
+{% if eth['ipv6'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} address '{{ eth['ipv6_addr'] }}'
+{% endif %}
+{% if eth['mirror'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} mirror '{{ eth['mirror'] }}'
+{% endif %}
+{% if eth['ipv6_addr_autoconf'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 address autoconf
+{% endif %}
+{% if eth['ipv6_eui64_prefix'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 address eui64 '{{ eth['ipv6_eui64_prefix'] }}'
+{% endif %}
+{% if eth['disable_flow_control'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} disable-flow-control
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} disable-flow-control
+{% endif %}
+{% if eth['disable_link_detect'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} disable-link-detect
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} disable-link-detect
+{% endif %}
+{% if eth['ipv4_disable_forwarding'] is defined %}
+{% if eth['ipv4_disable_forwarding'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% if eth['ipv4_disable_forwarding'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% endif %}
+{% if eth['disable_flow_control'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} disable-flow-control
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} disable-flow-control
+{% endif %}
+{% if eth['ipv4_adjust_mss'] is defined %}
+{% if eth['ipv4_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip adjust-mss {{ eth['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if eth['arp_cache_timeout'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip arp-cache-timeout '{{ eth['arp_cache_timeout'] }}'
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip arp-cache-timeout 30
+{% endif %}
+{% if eth['enable_directed_broadcast'] is defined %}
+{% if eth['enable_directed_broadcast'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip enable-directed-broadcast
+{% endif %}
+{% if eth['enable_directed_broadcast'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip enable-directed-broadcast
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_accept'] is defined %}
+{% if eth['enable_arp_accept'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-accept
+{% endif %}
+{% if eth['enable_arp_accept'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-accemt
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_announce'] is defined %}
+{% if eth['enable_arp_announce'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% if eth['enable_arp_announce'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_ignore'] is defined %}
+{% if eth['enable_arp_ignore'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% if eth['enable_arp_ignore'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% endif %}
+{% if eth['enable_proxy_arp'] is defined %}
+{% if eth['enable_proxy_arp'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% if eth['enable_proxy_arp'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% endif %}
+{% if eth['proxy_arp_pvlan'] is defined %}
+{% if eth['proxy_arp_pvlan'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip proxy_arp_pvlan
+{% endif %}
+{% if eth['proxy_arp_pvlan'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ip proxy_arp_pvlan
+{% endif %}
+{% endif %}
+{% if eth['source_validation_mode'] is defined %}
+{% if eth['source_validation_mode'] == 'strict' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip source-validation strict
+{% endif %}
+{% if eth['source_validation_mode'] == 'loose' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip source-validation loose
+{% endif %}
+{% if eth['source_validation_mode'] == 'disable' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ip source-validation disable
+{% endif %}
+{% endif %}
+{% if eth['ipv6_no_default_link_local'] is defined %}
+{% if eth['ipv6_no_default_link_local'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% if eth['ipv6_no_default_link_local'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% endif %}
+{% if eth['ipv6_disable_forwarding'] is defined %}
+{% if eth['ipv6_disable_forwarding'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% if eth['ipv6_disable_forwarding'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% endif %}
+{% if eth['ipv6_adjust_mss'] is defined %}
+{% if eth['ipv6_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} ipv6 adjust-mss {{ eth['ipv6_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if eth['dhcp_options'] is defined %}
+{% if eth['dhcp_options']['client_id'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options client-id '{{ eth['dhcp_options']['client_id'] }}'
+{% endif %}
+{% if eth['dhcp_options']['host_name'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options host-name '{{ eth['dhcp_options']['host_name'] }}'
+{% endif %}
+{% if eth['dhcp_options']['vendor_class_id'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options vendor-class-id '{{ eth['dhcp_options']['vendor_class_id'] }}'
+{% endif %}
+{% if eth['dhcp_options']['no-default-route'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options no-default-route
+{% endif %}
+{% if eth['dhcp_options']['default_route_distance'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options default-route-distance '{{ eth['dhcp_options']['default_route_distance'] }}'
+{% endif %}
+{% if eth['dhcp_options']['reject'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcp-options reject '{{ eth['dhcp_options']['reject'] }}'
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options'] is defined %}
+{% if eth['dhcpv6_options']['duid'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options duid '{{ eth['dhcpv6_options']['duid'] }}'
+{% endif %}
+{% if eth['dhcpv6_options']['parameters_only'] is defined %}
+{% if eth['dhcpv6_options']['parameters_only'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options parameters-only
+{% endif %}
+{% if eth['dhcpv6_options']['parameters_only'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options parameters-only
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['rapid_commit'] is defined %}
+{% if eth['dhcpv6_options']['rapid_commit'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% if eth['dhcpv6_options']['rapid_commit'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['temporary'] is defined %}
+{% if eth['dhcpv6_options']['temporary'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options temporary
+{% endif %}
+{% if eth['dhcpv6_options']['temporary'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} dhcpv6-options temporary
+{% endif %}
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['prefix_delegation'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6_options pd {{ eth['dhcpv6_options']['prefix_delegation']['pd]'] }} length {{ eth['dhcpv6_options']['prefix_delegation']['length'] }}
+{% for delegate in eth['dhcpv6_options']['prefix_delegation']['delegate_prefix']  %}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} sla-id {{ delegate['sla_id'] }}
+	set interfaces ethernet {{ eth['vyos_if'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
+{% endfor %}
+{% endif %}
+{% if eth['offloading'] is defined %}
+{% if eth['offloading']['gro'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload gro
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload gro
+{% endif %}
+{% if eth['offloading']['gso'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload gso
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload gso
+{% endif %}
+{% if eth['offloading']['lro'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload lro
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload lro
+{% endif %}
+{% if eth['offloading']['lrs'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload rps
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload rps
+{% endif %}
+{% if eth['offloading']['sg'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload sg
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload sg
+{% endif %}
+{% if eth['offloading']['tso'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} offload tso
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} offload tso
+{% endif %}
+{% endif %}
+{% if eth['xdp'] is defined %}
+{% if eth['xdp'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} xdp
+{% endif %}
+{% if eth['xdp'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} xdp
+{% endif %}
+{% endif %}
+{% if eth['eapol'] is defined %}
+{% if eth['eapol']['ca_certificate'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} eapol ca-certificate {{ eth['eapol']['ca_certificate'] }}
+{% endif %}
+{% if eth['eapol']['certificate'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} eapol certificate {{ eth['eapol']['certificate'] }}
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% if eth['vlan'] is  defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} description {{ eth['desc'] }}
+{% if eth['enabled'] is sameas false %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable
+{% endif %}
+{% if eth['vrf'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} vrf {{ eth['vrf'] }}
+{% endif %}
+{% if eth['mac'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} mac '{{ eth['mac'] }}'
+{% endif %}
+{% if eth['duplex'] == 'auto' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} duplex 'auto'
+{% endif %}
+{% if eth['duplex'] == 'full' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} duplex 'full'
+{% endif %}
+{% if eth['duplex'] == 'half' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} duplex 'half'
+{% endif %}
+{% if eth['duplex'] is not defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} duplex 'auto'
+{% endif %}
+{% if eth['speed'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} speed '{{ eth['speed'] }}'
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} speed 'auto'
+{% endif %}
+{% if eth['mtu'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} mtu {{ eth['mtu'] }}
+{% endif %}
+{% if eth['ipv4'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} address '{{ eth['ipv4_addr'] }}'
+{% endif %}
+{% if eth['ipv6'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} address '{{ eth['ipv6_addr'] }}'
+{% endif %}
+{% if eth['mirror'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} mirror '{{ eth['mirror'] }}'
+{% endif %}
+{% if eth['ipv6_addr_autoconf'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 address autoconf
+{% endif %}
+{% if eth['ipv6_eui64_prefix'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 address eui64 '{{ eth['ipv6_eui64_prefix'] }}'
+{% endif %}
+{% if eth['disable_flow_control'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-flow-control
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-flow-control
+{% endif %}
+{% if eth['disable_link_detect'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-link-detect
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-link-detect
+{% endif %}
+{% if eth['ipv4_disable_forwarding'] is defined %}
+{% if eth['ipv4_disable_forwarding'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip disable-forwarding
+{% endif %}
+{% if eth['ipv4_disable_forwarding'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip disable-forwarding
+{% endif %}
+{% endif %}
+{% if eth['disable_flow_control'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-flow-control
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} disable-flow-control
+{% endif %}
+{% if eth['ipv4_adjust_mss'] is defined %}
+{% if eth['ipv4_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip adjust-mss {{ eth['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if eth['arp_cache_timeout'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip arp-cache-timeout '{{ eth['arp_cache_timeout'] }}'
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip arp-cache-timeout 30
+{% endif %}
+{% if eth['enable_directed_broadcast'] is defined %}
+{% if eth['enable_directed_broadcast'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-directed-broadcast
+{% endif %}
+{% if eth['enable_directed_broadcast'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-directed-broadcast
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_accept'] is defined %}
+{% if eth['enable_arp_accept'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-accept
+{% endif %}
+{% if eth['enable_arp_accept'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-accemt
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_announce'] is defined %}
+{% if eth['enable_arp_announce'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-announce
+{% endif %}
+{% if eth['enable_arp_announce'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-announce
+{% endif %}
+{% endif %}
+{% if eth['enable_arp_ignore'] is defined %}
+{% if eth['enable_arp_ignore'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-ignore
+{% endif %}
+{% if eth['enable_arp_ignore'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-arp-ignore
+{% endif %}
+{% endif %}
+{% if eth['enable_proxy_arp'] is defined %}
+{% if eth['enable_proxy_arp'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-proxy-arp
+{% endif %}
+{% if eth['enable_proxy_arp'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip enable-proxy-arp
+{% endif %}
+{% endif %}
+{% if eth['proxy_arp_pvlan'] is defined %}
+{% if eth['proxy_arp_pvlan'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip proxy_arp_pvlan
+{% endif %}
+{% if eth['proxy_arp_pvlan'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip proxy_arp_pvlan
+{% endif %}
+{% endif %}
+{% if eth['source_validation_mode'] is defined %}
+{% if eth['source_validation_mode'] == 'strict' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip source-validation strict
+{% endif %}
+{% if eth['source_validation_mode'] == 'loose' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip source-validation loose
+{% endif %}
+{% if eth['source_validation_mode'] == 'disable' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ip source-validation disable
+{% endif %}
+{% endif %}
+{% if eth['ipv6_no_default_link_local'] is defined %}
+{% if eth['ipv6_no_default_link_local'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 address no-default-link-local
+{% endif %}
+{% if eth['ipv6_no_default_link_local'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 address no-default-link-local
+{% endif %}
+{% endif %}
+{% if eth['ipv6_disable_forwarding'] is defined %}
+{% if eth['ipv6_disable_forwarding'] is sameas true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 disable-forwarding
+{% endif %}
+{% if eth['ipv6_disable_forwarding'] is sameas false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 disable-forwarding
+{% endif %}
+{% endif %}
+{% if eth['ipv6_adjust_mss'] is defined %}
+{% if eth['ipv6_adjust_mss'] is sameas 'clamp-mss-to-pmtu' %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} ipv6 adjust-mss {{ eth['ipv6_adjust_mss'] }}
+{% endif %}
+{% endif %}
+{% if eth['dhcp_options'] is defined %}
+{% if eth['dhcp_options']['client_id'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options client-id '{{ eth['dhcp_options']['client_id'] }}'
+{% endif %}
+{% if eth['dhcp_options']['host_name'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options host-name '{{ eth['dhcp_options']['host_name'] }}'
+{% endif %}
+{% if eth['dhcp_options']['vendor_class_id'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options vendor-class-id '{{ eth['dhcp_options']['vendor_class_id'] }}'
+{% endif %}
+{% if eth['dhcp_options']['no-default-route'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options no-default-route
+{% endif %}
+{% if eth['dhcp_options']['default_route_distance'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options default-route-distance '{{ eth['dhcp_options']['default_route_distance'] }}'
+{% endif %}
+{% if eth['dhcp_options']['reject'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcp-options reject '{{ eth['dhcp_options']['reject'] }}'
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options'] is defined %}
+{% if eth['dhcpv6_options']['duid'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options duid '{{ eth['dhcpv6_options']['duid'] }}'
+{% endif %}
+{% if eth['dhcpv6_options']['parameters_only'] is defined %}
+{% if eth['dhcpv6_options']['parameters_only'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options parameters-only
+{% endif %}
+{% if eth['dhcpv6_options']['parameters_only'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options parameters-only
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['rapid_commit'] is defined %}
+{% if eth['dhcpv6_options']['rapid_commit'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% if eth['dhcpv6_options']['rapid_commit'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options rapid-commit
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['temporary'] is defined %}
+{% if eth['dhcpv6_options']['temporary'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options temporary
+{% endif %}
+{% if eth['dhcpv6_options']['temporary'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6-options temporary
+{% endif %}
+{% endif %}
+{% endif %}
+{% if eth['dhcpv6_options']['prefix_delegation'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6_options pd {{ eth['dhcpv6_options']['prefix_delegation']['pd]'] }} length {{ eth['dhcpv6_options']['prefix_delegation']['length'] }}
+{% for delegate in eth['dhcpv6_options']['prefix_delegation']['delegate_prefix']  %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} sla-id {{ delegate['sla_id'] }}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} dhcpv6_options pd {{ delegate['pd]'] }} interface {{ delegate['delegate_interface'] }} address {{ delegate['address'] }}
+{% endfor %}
+{% endif %}
+{% if eth['offloading'] is defined %}
+{% if eth['offloading']['gro'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload gro
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload gro
+{% endif %}
+{% if eth['offloading']['gso'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload gso
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload gso
+{% endif %}
+{% if eth['offloading']['lro'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload lro
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload lro
+{% endif %}
+{% if eth['offloading']['lrs'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload rps
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload rps
+{% endif %}
+{% if eth['offloading']['sg'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload sg
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload sg
+{% endif %}
+{% if eth['offloading']['tso'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload tso
+{% else %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} offload tso
+{% endif %}
+{% endif %}
+{% if eth['xdp'] is defined %}
+{% if eth['xdp'] == true %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} xdp
+{% endif %}
+{% if eth['xdp'] == false %}
+	delete interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} xdp
+{% endif %}
+{% endif %}
+{% if eth['eapol'] is defined %}
+{% if eth['eapol']['ca_certificate'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} eapol ca-certificate {{ eth['eapol']['ca_certificate'] }}
+{% endif %}
+{% if eth['eapol']['certificate'] is defined %}
+	set interfaces ethernet {{ eth['vyos_if'] }} vif {{ eth['vlan'] }} eapol certificate {{ eth['eapol']['certificate'] }}
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% endfor %}
