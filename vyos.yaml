@@ -1,0 +1,6 @@
+---
+- hosts: vyos_routers
+  gather_facts: false
+  tasks:
+    - import_role:
+        name: system
