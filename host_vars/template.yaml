@@ -21,13 +21,13 @@ ethernet:
     vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
     enabled: <true | false>
 #    vrf: <default | vrf>
-    description: <interface description>
+    desc: <interface description>
 #    duplex: <auto | full | half> # Defaults to auto if not defined
 #    speed:  <auto | 10 | 100 | 1000 | 2500 | 5000 | 10000 | 25000 | 40000 | 50000 | 100000> # Defaults to auto if not defined
     ipv4: <true | false>
     ipv4_addr: <address | dhcp>
     ipv6: <true | false>
-    ipv6_addr: <address | dhcp>
+    ipv6_addr: <address | dhcpv6>
 #    mirror: <interface> # Mirror all inbound traffic to this interface
 #    ipv6_addr_autoconf: <true | false> # This disables IPv6 forwarding for this interface
 #    ipv6_eui64_prefix: <prefix>
@@ -41,6 +41,7 @@ ethernet:
 #    enable_directed_broadcast: <true | false>
 #    enable_arp_accept: <true | false>
 #    enable_arp_announce: <true | false>
+#    enable_arp_ignore: <true | false>
 #    enable_proxy_arp: <true | false>
 #    proxy_arp_pvlan: <true | false>
 #    source_validation_mode: <strict | loose | disable>
@@ -52,10 +53,11 @@ ethernet:
 #      host_name: <hostname> # only define if you want to set an alternative hostname to be used for DHCPv6 packets
 #      vendor_class_id: <vendor-id>
 #      no_default_route: <true | false>
+#      default_route_distance: 100
 #      reject: <address | cidr>
 #    dhcpv6_options:
 #      duid: <duid>
-#      parameters-only: <true | false>
+#      parameters_only: <true | false>
 #      rapid_commit: <true | false>
 #      temporary: <true | false>
 #      prefix_delegation:
