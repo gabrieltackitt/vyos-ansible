@@ -64,9 +64,9 @@ ethernet:
 #        pd: <ID>
 #        length: <length>
 #        delegate_prefix:
-#          sla_id: 
-#          delegate_interface: <interface to delegate prefix to>
-#          address: <address for delegated prefix> # These three parameters can be specified multiple times
+#          - sla_id: 
+#            delegate_interface: <interface to delegate prefix to>
+#            address: <address for delegated prefix> # These three parameters can be specified multiple times
 #    offloading: # Enable hardware offloading (must be supported by hardware)
 #      gro: <true | false>
 #      gso: <true | false>
@@ -141,9 +141,9 @@ bonding:
 #        pd: <ID>
 #        length: <length>
 #        delegate_prefix:
-#          sla_id: 
-#          delegate_interface: <interface to delegate prefix to>
-#          address: <address for delegated prefix> # These three parameters can be specified multiple times
+#          - sla_id: 
+#            delegate_interface: <interface to delegate prefix to>
+#            address: <address for delegated prefix> # These three parameters can be specified multiple times
 #    xdp: <true | false> # WARNING: HIGHLY EXPERIMENTAL FEATURE 
 
 ### OPENVPN CONFIGURATION ###
@@ -157,22 +157,186 @@ pppoe:
 ### BRIDGE CONFIGURATIONS ###
 
 bridge:
+  - vyos_if: <interface name>
+    vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
+    enabled: <true | false>
+    vrf: <default | vrf>
+    desc: <interface description>
+    members:
+      - <list members, one per line>
+    ipv4: <true | false>
+    ipv4_addr: <address | dhcp>
+    ipv6: <true | false>
+    ipv6_addr: <address | dhcpv6>
+    mirror: # Mirror all inbound traffic to this interface
+      ingress: <interface>
+      egress: <interface>
+#    ipv6_addr_autoconf: <true | false> # This disables IPv6 forwarding for this interface
+#    ipv6_eui64_prefix: <prefix>
+#    mac: <xx:xx:xx:xx:xx:xx>
+#    mtu: <MTU>
+#    disable_flow_control: <true | false>
+#    disable_link_detect: <true | false>
+#    ipv4_disable_forwarding: <true | false>
+#    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    arp_cache_timeout: 30 # time-in-seconds
+#    enable_arp_accept: <true | false>
+#    enable_arp_announce: <true | false>
+#    enable_arp_ignore: <true | false>
+#    enable_proxy_arp: <true | false>
+#    proxy_arp_pvlan: <true | false>
+#    disable_arp_filter: <true | false>
+#    source_validation_mode: <strict | loose | disable>
+#    ipv6_no_default_link_local: <true | false>
+#    ipv6_disable_forwarding: <true | false>
+#    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    dhcp_options:
+#      client_id: <description>
+#      host_name: <hostname> # only define if you want to set an alternative hostname to be used for DHCPv6 packets
+#      vendor_class_id: <vendor-id>
+#      no_default_route: <true | false>
+#      default_route_distance: 100
+#      reject: <address | cidr>
+#    dhcpv6_options:
+#      duid: <duid>
+#      parameters_only: <true | false>
+#      rapid_commit: <true | false>
+#      temporary: <true | false>
+#      prefix_delegation:
+#        pd: <ID>
+#        length: <length>
+#        delegate_prefix:
+#          - sla_id: 
+#            delegate_interface: <interface to delegate prefix to>
+#            address: <address for delegated prefix> # These three parameters can be specified multiple times
 
 ### DUMMY CONFIGURATIONS ###
 
-dummy: 
+dummy:
+  - vyos_if: <interface name>
+    enabled: <true | false>
+    desc: <Interface description>
+    ipv4: <true | false>
+    ipv4_addr: <address>
+    ipv6: <true | false>
+    ipv6_addr: <address>
+    vrf: <default | vrf name>
 
 ### TUNNEL CONFIGURATIONS ###
 
 tunnel:
+  - vyos_if: <interface name>
+    enabled: <true | false>
+    desc: <Interface description>
+    tun_encapsulation: <ipip | ip6ip6 | ipip6 | sit | gre | gretap | ip6gre | ip6gretap>
+    tun_remote_address: <address>
+    tun_source_address: <address>
+    tun_ip_key: <numerical tunnel identifier>
+    mac: <xx:xx:xx:xx:xx:xx>
+    mtu: <MTU>
+    ipv4: <true | false>
+    ipv4_addr: <address>
+    ipv6: <true | false>
+    ipv6_addr: <address>
+    vrf: <default | vrf name>
+    disable_flow_control: <true | false>
+    disable_link_detect: <true | false>
+    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+    arp_cache_timeout: 30 # Time in seconds
+    disable_arp_filter: <true | false>
+    ipv4_disable_forwarding: <true | false>
+    enable_directed_broadcast: <true | false>
+    enable_arp_accept: <true | false>
+    enable_arp_announce: <true | false>
+    enable_arp_ignore: <true | false>
+    enable_proxy_arp: <true | false>
+    proxy_arp_pvlan: <true | false>
+    source_validation: <strict | loose | disable>
+    ipv6_address_autoconf: <true | false>
+    ipv6_address_eui64: <prefix>
+    ipv6_no_default_link_local: <true | false>
+    ipv6_disable_forwarding: <true | false>
+    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+    
+
+
 
 ### WIREGUARD CONFIGURATIONS ###
 
 wireguard:
+  - vyos_if: <interface name>
+    enabled: <true | false>
+    desc: <interface description>
+    private_key: <insert private key, or use ansible secret>
+    port: <wireguard port>
+    ipv4: <true | false>
+    ipv4_addr: <address>
+    ipv6: <true | false>
+    ipv6_addr: <address>
+    mtu: <MTU>
+    vrf: <default | vrf name>
+    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+    arp_cache_timeout: 30 # Time in seconds
+    disable_arp_filter: <true | false>
+    ipv4_disable_forwarding: <true | false>
+    enable_arp_accept: <true | false>
+    enable_arp_announce: <true | false>
+    enable_arp_ignore: <true | false>
+    enable_proxy_arp: <true | false>
+    proxy_arp_pvlan: <true | false>
+    source_validation: <strict | loose | disable>
+    ipv6_address_autoconf: <true | false>
+    ipv6_address_eui64: <prefix>
+    ipv6_no_default_link_local: <true | false>
+    ipv6_disable_forwarding: <true | false>
+    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+    peers:
+      - peer_name: <peer name>
+        peer_enabled: <true | false>
+        peer_endpoint_address: <peer address>
+        peer_endpoint_port: <peer port>
+        peer_public_key: <peer public key>
+        peer_preshared_key: <preshared key, or ansible secret>
+        peer_allowed_ips:
+          - <allowed ip>
+        peer_persistent_keepalive: <time in seconds>
+
+
+
 
 ### VXLAN CONFIGURATION ###
 
 vxlan:
+  - vyos_if: <interface name>
+    enabled: <true | false>
+    desc: <interface description>
+    vni: <0-16777214>
+    vxlan_port: <port number>
+    source_address: <address>
+    ipv4: <true | false>
+    ipv4_addr: <address>
+    ipv6: <true | false>
+    ipv6_addr: <address>
+    mtu: <MTU>
+    mac: <xx:xx:xx:xx:xx:xx>
+    vrf: <default | vrf name>
+    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+    arp_cache_timeout: 30 # Time in seconds
+    disable_arp_filter: <true | false>
+    ipv4_disable_forwarding: <true | false>
+    enable_arp_accept: <true | false>
+    enable_arp_announce: <true | false>
+    enable_arp_ignore: <true | false>
+    enable_proxy_arp: <true | false>
+    proxy_arp_pvlan: <true | false>
+    source_validation: <strict | loose | disable>
+    ipv6_address_autoconf: <true | false>
+    ipv6_address_eui64: <prefix>
+    ipv6_no_default_link_local: <true | false>
+    ipv6_disable_forwarding: <true | false>
+    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+
+
 
 ### WLAN/WIFI CONFIGURATION ###
 
