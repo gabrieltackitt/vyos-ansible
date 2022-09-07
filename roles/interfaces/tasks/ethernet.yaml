@@ -1,0 +1,9 @@
+- name: Configure Ethernet Interfaces
+  vyos_config:
+    src: ethernet.j2
+  when:
+    - ethernet is defined
+  tags:
+    - ethernet
+    - ethernet_v4
+    - ethernet_v6

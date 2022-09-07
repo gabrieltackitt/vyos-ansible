@@ -270,9 +270,11 @@ wireguard:
     private_key: <insert private key, or use ansible secret>
     port: <wireguard port>
     ipv4: <true | false>
-    ipv4_addr: <address>
+    ipv4_addr: 
+      - <address | dhcp>
     ipv6: <true | false>
-    ipv6_addr: <address>
+    ipv6_addr: 
+      - <address | dhcpv6>
     mtu: <MTU>
     vrf: <default | vrf name>
     ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
@@ -284,7 +286,7 @@ wireguard:
     enable_arp_ignore: <true | false>
     enable_proxy_arp: <true | false>
     proxy_arp_pvlan: <true | false>
-    source_validation: <strict | loose | disable>
+    source_validation_mode: <strict | loose | disable>
     ipv6_address_autoconf: <true | false>
     ipv6_address_eui64: <prefix>
     ipv6_no_default_link_local: <true | false>

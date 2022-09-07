@@ -1,0 +1,9 @@
+- name: Configure Wireguard Interfaces
+  vyos_config:
+    src: wireguard.j2
+  when:
+    - wireguard is defined
+  tags:
+    - wireguard
+    - wireguard_v4
+    - wireguard_v6

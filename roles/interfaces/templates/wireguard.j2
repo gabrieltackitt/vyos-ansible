@@ -1,0 +1,202 @@
+{% for wg in wireguard %}
+	set interfaces wireguard {{ wg['vyos_if'] }} description '{{ wg['desc'] }}'
+
+{% if wg['enabled'] == false %}
+	set interfaces wireguard {{ wg['vyos_if'] }} disable
+{% endif %}
+{% if wg['enabled'] == true %}
+	disable interfaces wireguard {{ wg['vyos_if'] }} disable
+{% endif %}
+
+	set interfaces wireguard {{ wg['vyos_if'] }} private-key {{ wg['private_key'] }}
+	set interfaces wireguard {{ wg['vyos_if'] }} port {{ wg['port'] }}
+
+{% if wg['ipv4'] == true %}
+{% for ipv4addr in wg['ipv4_addr'] %}
+	set interfaces wireguard {{ wg['vyos_if'] }} address {{ ipv4addr }}
+{% endfor %}
+{% endif %}
+
+{% if wg['ipv6'] == true %}
+{% for ipv6addr in wg['ipv6_addr'] %}
+	set interfaces wireguard {{ wg['vyos_if'] }} address {{ ipv6addr }}
+{% endfor %}
+{% endif %}
+
+{% if wg['mtu'] is defined %}
+	set interfaces wireguard {{ wg['vyos_if'] }} mtu {{ wg['mtu'] }}
+{% endif %}
+
+{% if wg['vrf'] is defined %}
+	set interfaces wireguard {{ wg['vyos_if'] }} vrf {{ wg['vrf'] }}
+{% endif %}
+
+{% if wg['ipv4_adjust_mss'] is defined %}
+{% if wg['ipv4_adjust_mss'] == 'clamp-mss-to-pmtu' %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip adjust-mss {{ wg['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+
+{% if wg['arp_cache_timeout'] is defined %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip arp-cache-timeout {{ wg['arp_cache_timeout'] }}
+{% else %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip arp-cache-timeout 30
+{% endif %}
+
+{% if wg['disable_arp_filter'] is defined %}
+{% if wg['disable_arp_filter'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+{% if wg['disable_arp_filter'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip disable-arp-filter
+{% endif %}
+{% endif %}
+
+{% if wg['ipv4_disable_forwarding'] is defined %}
+{% if wg['ipv4_disable_forwarding'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% if wg['ipv4_disable_forwarding'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip disable-forwarding
+{% endif %}
+{% endif %}
+
+{% if wg['enable_arp_accept'] is defined %}
+{% if wg['enable_arp_accept'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-accept
+{% endif %}
+{% if wg['enable_arp_accept'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-accept
+{% endif %}
+{% endif %}
+
+{% if wg['enable_arp_announce'] is defined %}
+{% if wg['enable_arp_announce'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% if wg['enable_arp_announce'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-announce
+{% endif %}
+{% endif %}
+
+{% if wg['enable_arp_ignore'] is defined %}
+{% if wg['enable_arp_ignore'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% if wg['enable_arp_ignore'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip enable-arp-ignore
+{% endif %}
+{% endif %}
+
+{% if wg['enable_proxy_arp'] is defined %}
+{% if wg['enable_proxy_arp'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% if wg['enable_proxy_arp'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip enable-proxy-arp
+{% endif %}
+{% endif %}
+
+{% if wg['proxy_arp_pvlan'] is defined %}
+{% if wg['proxy_arp_pvlan'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip proxy-arp-pvlan
+{% endif %}
+{% if wg['proxy_arp_pvlan'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ip proxy-arp-pvlan
+{% endif %}
+{% endif %}
+
+{% if wg['source_validation_mode'] is defined %}
+{% if wg['source_validation_mode'] == 'strict' %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip source-validation strict
+{% endif %}
+{% if bond['source_validation_mode'] == 'loose' %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip source-validation loose
+{% endif %}
+{% if bond['source_validation_mode'] == 'disable' %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ip source-validation disable
+{% endif %}
+{% endif %}
+
+{% if wg['ipv6_address_autoconf'] is defined %}
+{% if wg['ipv6_address_autoconf'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 address autoconf
+{% endif %}
+{% if wg['ipv6_address_autoconf'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ipv6 address autoconf
+{% endif %}
+{% endif %}
+
+{% if wg['ipv6_address_eui64'] is defined %}
+{% if wg['ipv6_address_eui64_prefix'] is defined %}
+{% if wg['ipv6_address_eui64'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 address eui64 {{ wg['ipv6_address_eui64_prefix'] }}
+{% endif %}
+{% if wg['ipv6_address_eui64'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ipv6 address eui64
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% if wg['ipv6_no_default_link_local'] is defined %}
+{% if wg['ipv6_no_default_link_local'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% if wg['ipv6_no_default_link_local'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ipv6 address no-default-link-local
+{% endif %}
+{% endif %}
+
+{% if wg['ipv6_disable_forwarding'] is defined %}
+{% if wg['ipv6_disable_forwarding'] == true %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% if wg['ipv6_disable_forwarding'] == false %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} ipv6 disable-forwarding
+{% endif %}
+{% endif %}
+
+{% if wg['ipv6_adjust_mss'] is defined %}
+{% if wg['ipv6_adjust_mss'] == 'clamp-mss-to-pmtu' %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 adjust-mss clamp-mss-to-pmtu
+{% else %}
+	set interfaces wireguard {{ wg['vyos_if'] }} ipv6 adjust-mss {{ wg['ipv4_adjust_mss'] }}
+{% endif %}
+{% endif %}
+
+
+{% for peer in wg['peers'] %}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} description {{ peer['peer_description'] }}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} address {{ peer['peer_endpoint_address'] }}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} port {{ peer['peer_endpoint_port'] }}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} public-key {{ peer['peer_public_key'] }}
+
+{% if peer['peer_enabled'] is defined %}
+{% if peer['peer_enabled'] == false %}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} disable
+{% endif %}
+{% if peer['peer_enabled'] == true %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} disable
+{% endif %}
+{% endif %}
+
+{% if peer['peer_preshared_key'] is defined %}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} preshared-key {{ peer['peer_preshared_key'] }}
+{% endif %}
+
+{% if peer['peer_persistent_keepalive'] is defined %}
+{% if peer['peer_persistent_keepalive'] is > 0 %}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} persistent-keepalive {{ peer['peer_persistent_keepalive'] }}
+{% endif %}
+{% if peer['peer_persistent_keepalive'] is < 0 %}
+	delete interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} persistent-keepalive
+{% endif %}
+{% endif %}
+
+{% for allowed_ips in peer['peer_allowed_ips'] %}
+	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} allowed-ips {{ allowed_ips }}
+{% endfor %}
+
+{% endfor %}

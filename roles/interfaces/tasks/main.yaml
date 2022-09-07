@@ -4,7 +4,10 @@
   include_tasks: ethernet.yaml
 
 - name: 'Configure Bridge Interfaces'
-  include: br.yaml
+  include: bridge.yaml
 
 - name: 'Configure Dummy Interfaces'
-  include_tasks: dum.yaml
+  include_tasks: dummy.yaml
+
+- name: 'Configure Wireguard Interfaces'
+  include_tasks: wireguard.yaml
