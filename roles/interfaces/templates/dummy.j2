@@ -5,7 +5,7 @@
 {% else %}
 	delete interfaces dummy {{ dummy['vyos_if'] }} disable
 {% endif %}
-{% if bridge['ipv4'] == true %}
+{% if dummy['ipv4'] == true %}
 	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv4_addr'] }}'
 {% endif %}
 {% if dummy['ipv6'] == true %}
