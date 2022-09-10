@@ -294,6 +294,7 @@ wireguard:
     ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
     peers:
       - peer_name: <peer name>
+        peer_desc: <peer description>
         peer_enabled: <true | false>
         peer_endpoint_address: <peer address>
         peer_endpoint_port: <peer port>
