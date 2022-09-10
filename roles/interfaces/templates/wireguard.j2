@@ -5,7 +5,7 @@
 	set interfaces wireguard {{ wg['vyos_if'] }} disable
 {% endif %}
 {% if wg['enabled'] == true %}
-	disable interfaces wireguard {{ wg['vyos_if'] }} disable
+	delete interfaces wireguard {{ wg['vyos_if'] }} disable
 {% endif %}
 
 	set interfaces wireguard {{ wg['vyos_if'] }} private-key {{ wg['private_key'] }}
