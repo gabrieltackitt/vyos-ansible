@@ -1,0 +1,9 @@
+- name: Configure BGP 
+  vyos_config:
+    src: bgp.j2
+  when:
+    - bgp is defined
+  tags:
+    - bgp
+    - bgp_v4
+    - bgp_v6

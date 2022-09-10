@@ -1,2 +1,5 @@
 ---
 # Routing Tasks List
+
+- name: 'Configure BGP'
+  include_tasks: bgp.yaml
