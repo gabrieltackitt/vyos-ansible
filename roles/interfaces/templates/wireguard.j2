@@ -1,5 +1,5 @@
 {% for wg in wireguard %}
-	set interfaces wireguard {{ wg['vyos_if'] }} description '{{ wg['desc'] }}'
+	set interfaces wireguard {{ wg['vyos_if'] }} description "{{ wg['desc'] }}"
 
 {% if wg['enabled'] == false %}
 	set interfaces wireguard {{ wg['vyos_if'] }} disable
