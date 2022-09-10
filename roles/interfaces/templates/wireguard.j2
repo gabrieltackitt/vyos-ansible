@@ -9,7 +9,9 @@
 {% endif %}
 
 	set interfaces wireguard {{ wg['vyos_if'] }} private-key {{ wg['private_key'] }}
+{% if wg['port'] is defined %}
 	set interfaces wireguard {{ wg['vyos_if'] }} port {{ wg['port'] }}
+{% endif %}
 
 {% if wg['ipv4'] == true %}
 {% for ipv4addr in wg['ipv4_addr'] %}
