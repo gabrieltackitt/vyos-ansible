@@ -1,0 +1,16 @@
+{% for dummy in dummy %}
+	set interfaces dummy {{ dummy['vyos_if'] }} description '{{ dummy['desc'] }}'
+{% if dummy['enabled'] == false %}
+	set interfaces dummy {{ dummy['vyos_if'] }} disable
+{% else %}
+	delete interfaces dummy {{ dummy['vyos_if'] }} disable
+{% endif %}
+{% if bridge['ipv4'] == true %}
+	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv4_addr'] }}'
+{% endif %}
+{% if dummy['ipv6'] == true %}
+	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv6_addr'] }}'
+{% endif %}
+{% if dummy['vrf'] is defined %}
+	set interfaces dummy {{ dummy['vyos_if'] }} vrf '{{ dummy['vrf'] }}'
+{% endfor %}
