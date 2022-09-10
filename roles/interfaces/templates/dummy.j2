@@ -13,4 +13,5 @@
 {% endif %}
 {% if dummy['vrf'] is defined %}
 	set interfaces dummy {{ dummy['vyos_if'] }} vrf '{{ dummy['vrf'] }}'
+{% endif %}
 {% endfor %}
