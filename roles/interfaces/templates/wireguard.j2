@@ -193,5 +193,6 @@
 {% for allowed_ips in peer['peer_allowed_ips'] %}
 	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} allowed-ips {{ allowed_ips }}
 {% endfor %}
+{% endfor %}
 
 {% endfor %}
