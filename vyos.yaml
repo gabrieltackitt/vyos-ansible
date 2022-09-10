@@ -4,3 +4,5 @@
   tasks:
     - import_role:
         name: system
+    - import_role:
+        name: interfaces
