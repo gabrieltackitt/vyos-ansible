@@ -172,7 +172,6 @@
 
 
 {% for peer in wg['peers'] %}
-	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} description {{ peer['peer_desc'] }}
 	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} address {{ peer['peer_endpoint_address'] }}
 	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} port {{ peer['peer_endpoint_port'] }}
 	set interfaces wireguard {{ wg['vyos_if'] }} peer {{ peer['peer_name'] }} public-key {{ peer['peer_public_key'] }}
