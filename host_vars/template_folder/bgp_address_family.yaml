@@ -1,0 +1,200 @@
+bgp_address_family:
+  ipv4_flowspec: <enabled | disabled>
+    local_install_interface: <interface>
+  ipv4_labeled_unicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv4_multicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv4 prefix>
+          distance: <1-255>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv4_unicast:
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv4 prefix>
+          distance: <1-255>
+    export_vpn: <true | false>
+    import_vpn: <true | false>
+    import_vrf: <vrf name>
+    label:
+      vpn_export: <0-1048575 | auto>
+    maximum_paths:
+      ebgp: <1-256>
+      ibpg: <1-256>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+    rd_vpn_export: <ASN:NN_OR_IP-ADDRESS:NN>
+    redistribute:
+      connected: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      isis: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      kernel: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ospf: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      rip: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      static: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      table: <table number>
+    route_map:
+      vpn_export: <route-map>
+      vpn_import: <route map>
+    route_target:
+      vpn_export: <true | false>
+      vpn_import: <true | false>
+      vpn_both: <true | false>
+  ipv4_vpn:
+    network:
+      - prefix: <IPv4 Prefix>
+        label: <0-1048575>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+  ipv6_flowspec: <enabled | disabled>
+    local_install_interface: <interface>
+  ipv6_labeled_unicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv6_multicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv6 prefix>
+          distance: <1-255>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv6_unicast:
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv6 prefix>
+          distance: <1-255>
+    export_vpn: <true | false>
+    import_vpn: <true | false>
+    import_vrf: <vrf name>
+    label:
+      vpn_export: <0-1048575 | auto>
+    maximum_paths:
+      ebgp: <1-256>
+      ibpg: <1-256>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+    rd_vpn_export: <ASN:NN_OR_IP-ADDRESS:NN>
+    redistribute:
+      connected: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      kernel: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ospfv3: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ripng: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      static: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      table: <table number>
+    route_map:
+      vpn_export: <route-map>
+      vpn_import: <route map>
+    route_target:
+      vpn_export: <true | false>
+      vpn_import: <true | false>
+      vpn_both: <true | false>
+  ipv6_vpn:
+    network:
+      - prefix: <IPv6 Prefix>
+        label: <0-1048575>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+  l2vpn-evpn:
+    advertise:
+      ipv4_unicast: <true | false>
+          route-map: <route-map>
+      ipv6_unicast: <true | false>
+          route-map: <route-map>
+    advertise-all-vni: <true | false>
+    advertise-default-gw: <true | false>
+    advertise-pip: <prefix>
+    advertise-svi-ip: <true | false>
+    flooding:
+      disable: <true | false>
+      head-end-replication: <true | false>
+    rd: <ASN:NN_OR_IP-ADDRESS:NN>
+    route-target:
+      export: <true | false>
+      import: <true | false>
+      both: <true | false>
+    rt-auto-derive: <true | false>
+    vni: 
+      - vni_number: <1-16777215>
+        advertise-default-gw: <true | false>
+        advertise-svi-ip: <true | false>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+        route-target:
+          export: <true | false>
+          import: <true | false>
+          both: <true | false>

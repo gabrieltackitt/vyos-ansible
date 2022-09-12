@@ -1,0 +1,62 @@
+ethernet:
+  - vyos_if: <interface name>
+    vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
+    enabled: <true | false>
+#    vrf: <default | vrf>
+    desc: <interface description>
+#    duplex: <auto | full | half> # Defaults to auto if not defined
+#    speed:  <auto | 10 | 100 | 1000 | 2500 | 5000 | 10000 | 25000 | 40000 | 50000 | 100000> # Defaults to auto if not defined
+    ipv4: <true | false>
+    ipv4_addr: <address | dhcp>
+    ipv6: <true | false>
+    ipv6_addr: <address | dhcpv6>
+#    mirror: <interface> # Mirror all inbound traffic to this interface
+#    ipv6_addr_autoconf: <true | false> # This disables IPv6 forwarding for this interface
+#    ipv6_eui64_prefix: <prefix>
+#    mac: <xx:xx:xx:xx:xx:xx>
+#    mtu: <MTU>
+#    disable_flow_control: <true | false>
+#    disable_link_detect: <true | false>
+#    ipv4_disable_forwarding: <true | false>
+#    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    arp_cache_timeout: 30 # time-in-seconds
+#    enable_directed_broadcast: <true | false>
+#    enable_arp_accept: <true | false>
+#    enable_arp_announce: <true | false>
+#    enable_arp_ignore: <true | false>
+#    enable_proxy_arp: <true | false>
+#    proxy_arp_pvlan: <true | false>
+#    source_validation_mode: <strict | loose | disable>
+#    ipv6_no_default_link_local: <true | false>
+#    ipv6_disable_forwarding: <true | false>
+#    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+#    dhcp_options:
+#      client_id: <description>
+#      host_name: <hostname> # only define if you want to set an alternative hostname to be used for DHCPv6 packets
+#      vendor_class_id: <vendor-id>
+#      no_default_route: <true | false>
+#      default_route_distance: 100
+#      reject: <address | cidr>
+#    dhcpv6_options:
+#      duid: <duid>
+#      parameters_only: <true | false>
+#      rapid_commit: <true | false>
+#      temporary: <true | false>
+#      prefix_delegation:
+#        pd: <ID>
+#        length: <length>
+#        delegate_prefix:
+#          - sla_id: 
+#            delegate_interface: <interface to delegate prefix to>
+#            address: <address for delegated prefix> # These three parameters can be specified multiple times
+#    offloading: # Enable hardware offloading (must be supported by hardware)
+#      gro: <true | false>
+#      gso: <true | false>
+#      lro: <true | false>
+#      rps: <true | false>
+#      sg: <true | false>
+#      tso: <true | false>
+#    xdp: <true | false> # WARNING: HIGHLY EXPERIMENTAL FEATURE 
+#    eapol:   ### NOT YET IMPLEMENTED
+#      ca_certificate: <name>
+#      certificate: <name>
