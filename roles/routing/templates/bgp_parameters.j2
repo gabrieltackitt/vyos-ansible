@@ -295,10 +295,10 @@ delete protocols bgp parameters graceful-restart
 set protocols bgp parameters graceful_shutdown
 {% endif %}
 {% if bgp['graceful_shutdown'] == false %}
-delete protocols bgp parameters graceful_shutdown
+delete protocols bgp parameters graceful-shutdown
 {% endif %}
 {% else %}
-delete protocols bgp parameters graceful_shutdown
+delete protocols bgp parameters graceful-shutdown
 {% endif %}
 
 {% if bgp['log_neighbor_changes'] is defined %}
