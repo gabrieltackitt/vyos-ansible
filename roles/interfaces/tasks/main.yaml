@@ -4,7 +4,7 @@
   include_tasks: ethernet.yaml
 
 - name: 'Configure Bridge Interfaces'
-  include: bridge.yaml
+  include_tasks: bridge.yaml
 
 - name: 'Configure Dummy Interfaces'
   include_tasks: dummy.yaml

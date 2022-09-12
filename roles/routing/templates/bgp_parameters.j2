@@ -1,6 +1,6 @@
 {% for bgp in bgp %}
 
-	set protocols bgp system-as {{ bgp['system_as'] }}
+	protocols bgp system-as {{ bgp['system_as'] }}
 
 	{% if bgp['bgp_enabled'] is defined %}
 	{% if bgp['bgp_enabled'] == false %}
