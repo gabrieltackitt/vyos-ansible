@@ -292,7 +292,7 @@ delete protocols bgp parameters graceful-restart
 
 {% if bgp['graceful_shutdown'] is defined %}
 {% if bgp['graceful_shutdown'] == true %}
-set protocols bgp parameters graceful_shutdown
+set protocols bgp parameters graceful-shutdown
 {% endif %}
 {% if bgp['graceful_shutdown'] == false %}
 delete protocols bgp parameters graceful-shutdown
