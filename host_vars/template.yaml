@@ -381,59 +381,60 @@ bgp:
   route_map: <route-map>
   listen:
     limit: <1-5000>
-    range: <ipv4/ipv6 prefix>
-      peer_group: <peer-group for listen range>
+    range: 
+      - listen_range: <ipv4/ipv6 prefix>
+        peer_group: <peer-group for listen range>
   bestpath:
-    as-path:
+    as_path: <true | false>
       confed: <true | false>
       ignore: <true | false>
-      multipath-relax: <true | false>
+      multipath_relax: <true | false>
     bandwidth:
-      default-weight-for-missing: <true | false>
+      default_weight_for_missing: <true | false>
       ignore: <true | false>
       skip_missing: <true | false>
     compare_router_id: <true | false>
-    med:
+    med: <true | false>
       confed: <true | false>
       missing_as_worst: <true | false>
-    cluster_id: <x.x.x.x>
-    conditional-advertisement:
-      timer: <5-240>
-    confederation:
-      identifier: <confederation AS>
-      peers:
-        - <CONFEDERATION PEER AS>
-    dampening: <true | false>
-      half_life: <1-45>
-      max_suppress_time: <1-20000>
-      start_suppress_time: <1-20000>
-    default:
-      local_pref: <0-4294967295>
-    deterministic-med: <true | false>
-    distance:
-      global:
-        external: <1-255>
-        internal: <1-255>
-        local: <1-255>
-      prefix:
-        - ip_prefix: <IPv4/IPv6 Prefix>
-          distance: <1-255
-    ebgp_requires_policy: <true | false>
-    fast_convergence: <true | false>
-    graceful_restart: <true | false>
-      stalepath_time: <1-3600>
-    graceful_shutdown: <true | false>
-    log_neighbor_changes: <true | false>
-    minimum_holdtime: <1-65535>
-    network_import_check: <true | false>
-    no_client_to_client_reflection: <true | false>
-    no_fast_external_failover: <true | false>
-    no_suppress_duplicates: <true | false>
-    reject_as_sets: <true | false>
-    suppress_fib_pending: <true | false>
-    timers:
-      holdtime: <0-65535> ### Set to 0 to disable
-      keepalive: <0-65535> ### Set to 0 to disable
+  cluster_id: <x.x.x.x>
+  conditional_advertisement: <true | false>
+    timer: <5-240>
+  confederation: 
+    identifier: <confederation AS>
+    peers:
+      - <CONFEDERATION PEER AS>
+  dampening: <true | false>
+    half_life: <1-45>
+    max_suppress_time: <1-20000>
+    start_suppress_time: <1-20000>
+  default: <true | false>
+    local_pref: <0-4294967295>
+  deterministic-med: <true | false>
+  distance:
+    global:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+    prefix:
+      - ip_prefix: <IPv4/IPv6 Prefix>
+        distance: <1-255
+  ebgp_requires_policy: <true | false>
+  fast_convergence: <true | false>
+  graceful_restart: <true | false>
+    stalepath_time: <1-3600>
+  graceful_shutdown: <true | false>
+  log_neighbor_changes: <true | false>
+  minimum_holdtime: <1-65535>
+  network_import_check: <true | false>
+  no_client_to_client_reflection: <true | false>
+  no_fast_external_failover: <true | false>
+  no_suppress_duplicates: <true | false>
+  reject_as_sets: <true | false>
+  suppress_fib_pending: <true | false>
+  timers:
+    holdtime: <0-65535> ### Set to 0 to disable
+    keepalive: <0-65535> ### Set to 0 to disable
 
 bgp_address_family:
   ipv4_flowspec: <enabled | disabled>

@@ -1,0 +1,391 @@
+{% for bgp in bgp %}
+
+	set protocols bgp system-as {{ bgp['system_as'] }}
+
+	{% if bgp['bgp_enabled'] is defined %}
+	{% if bgp['bgp_enabled'] == false %}
+		set protocols bgp parameters shutdown
+	{% endif %}
+	{% if bgp['bgp_enabled'] == true %}
+		delete protocols bgp parameters shutdown
+	{% endif %}
+	{% endif %}
+
+	{% if bgp['router_id'] is defined %}
+		set protocols bgp parameters router-id {{ bgp['router_id'] }}
+	{% endif %}
+
+	{% if bgp['route_map'] is defined %}
+		set protocols bgp route-map {{ bgp['route-map'] }}
+	{% endif %}
+
+	{% if bgp['listen'] is defined %}
+	{% if bgp['listen']['range'] is defined %}
+	{% for range in bgp['listen']['range'] %}
+		set protocols bgp listen range {{ range['listen_range'] }} peer-group {{ range['peer_group'] }}
+	{% endfor %}
+	{% endif %}
+	{% if bgp['listen']['limit'] is defined %}
+		set protocols bgp listen limit {{ bgp['listen']['limit'] }}
+	{% endif %}
+	{% endif %}
+
+	{% if bgp['bestpath'] is defined %}
+		{% if bgp['bestpath']['as_path'] is defined %}
+			{% if bgp['bestpath']['as_path'] == true %}
+				set protocols bgp parameters bestpath as-path
+				{% if bgp['bestpath']['as_path']['confed'] == true %}
+					set protocols bgp parameters bestpath as-path confed
+				{% endif %}
+				{% if bgp['bestpath']['as_path']['confed'] == false %}
+					delete protocols bgp parameters bestpath as-path confed
+				{% endif %}
+				{% if bgp['bestpath']['as_path']['ignore'] == true %}
+					set protocols bgp parameters bestpath as-path ignore
+				{% endif %}
+				{% if bgp['bestpath']['as_path']['ignore'] == false %}
+					delete protocols bgp parameters bestpath as-path ignore
+				{% endif %}
+				{% if bgp['bestpath']['as_path']['multipath_relax'] == true %}
+					set protocols bgp parameters bestpath as-path multipath-relace
+				{% endif %}
+				{% if bgp['bestpath']['as_path']['multipath_relax'] == false %}
+					delete protocols bgp parameters bestpath as-path multipath-relace
+				{% endif %}
+			{% endif %}
+			{% if bgp['bestpath']['as_path'] == false %}
+				delete protocols bgp parameters bestpath as-path
+			{% endif %}
+		{% else %}
+			delete protocols bgp parameters bestpath as-path
+		{% endif %}
+
+		{% if bgp['bestpath']['bandwidth'] is defined %}
+			{% if bgp['bestpath']['bandwidth']['default_weight_for_missing'] == true %}
+				set protocols bgp parameters bestpath bandwidth default-weight-for-missing
+			{% endif %}
+			{% if bgp['bestpath']['bandwidth']['default_weight_for_missing'] == false %}
+				delete protocols bgp parameters bestpath bandwidth default-weight-for-missing
+			{% endif %}
+			{% if bgp['bestpath']['bandwidth']['ignore'] == true %}
+				set protocols bgp parameters bestpath bandwidth ignore
+			{% endif %}
+			{% if bgp['bestpath']['bandwidth']['ignore'] == false %}
+				set protocols bgp parameters bestpath bandwidth ignore
+			{% endif %}
+			{% if bgp['bestpath']['bandwidth']['skip_missing'] == true %}
+				set protocols bgp parameters bestpath bandwidth skip-missing
+			{% endif %}
+			{% if bgp['bestpath']['bandwidth']['skip_missing'] == false %}
+				set protocols bgp parameters bestpath bandwidth skip-missing
+			{% endif %}
+		{% else %}
+			delete protocols bgp parameters bestpath bandwidth
+		{% endif %}
+
+		{% if bpg['bestpath']['compare_router_id'] is defined %}
+			{% if bpg['bestpath']['compare_router_id'] == true %}
+				set protocols bgp parameters bestpath compare-router-id
+			{% endif %}
+			{% if bgp['bestpath']['compare_router_id'] == false %}
+				delete protocols bgp parameters bestpath compare-router-id
+			{% endif %}
+		{% else %}
+			delete protocols bgp parameters bestpath compare-router-id
+		{% endif %}
+
+		{% if bgp['bestpath']['med'] is defined %}
+			{% if bgp['bestpath']['med'] == true %}
+				set protocols bgp parameters bestpath med
+				{% if bgp['bestpath']['med']['confed'] == true %}
+					set protocols bgp parameters bestpath med confed
+				{% endif %}
+				{% if bgp['bestpath']['med']['confed'] == false %}
+					delete protocols bgp parameters bestpath med confed
+				{% endif %}
+				{% if bgp['bestpath']['med']['missing_as_worst'] == true %}
+					set protocols bgp parameters bestpath med missing-as-worst
+				{% endif %}
+				{% if bgp['bestpath']['med']['missing_as_worst'] == false %}
+					delete protocols bgp parameters bestpath med missing-as-worst
+				{% endif %}
+			{% endif %}
+			{% if bgp['bestpath']['med'] == false %}
+				delete protocols bgp parameters bestpath med
+			{% endif %}
+		{% else %}
+			delete protocols bgp parameters bestpath med
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters bestpath
+	{% endif %}
+
+	{% if bgp['cluster_id'] is defined %}
+		set protocols bgp parameters cluster-id {{ bgp['cluster_id'] }}
+	{% else %}
+		delete protocols bgp parameters cluster-id
+	{% endif %}
+
+	{% if bgp['conditional_advertisement'] is defined %}
+		{% if bgp['conditional_advertisement'] == true %}
+			set protocols bgp parameters conditional-advertisement
+			{% if bgp['conditional_advertisement']['timer'] is defined %}
+				set protocols bgp parameters conditional-advertisement timer {{ bgp['conditional_advertisement']['timer'] }}
+			{% else %}
+				delete protocols bgp parameters conditional-advertisement timer
+			{% endif %}
+		{% endif %}
+		{% if bgp['conditional_advertisement'] == false %}
+			delete protocols bgp parameters conditional-advertisement
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters conditional-advertisement
+	{% endif %}
+
+	{% if bgp['confederation'] is defined %}
+		{% if bgp['confederation']['identifier'] is defined %}
+			set protocols bgp parameters confederation identifier {{ bgp['confederation']['identifier'] }}
+		{% endif %}
+		{% if bgp['confederation']['peers'] is defined %}
+			{% for confed_peers in bgp['confederation']['peers'] %}
+				set protocols bgp parameters confederation peers {{ confed_peers }}
+			{% endfor %}
+		{% endif %}
+		{% if bgp['confederation']['identifier'] is not defined %}
+			delete protocols bgp parameters confederation
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters confederation
+	{% endif %}
+
+	{% if bgp['dampening'] is defined %}
+		{% if bgp['dampening'] == true %}
+			set protocols bgp parameters dampening
+			{% if bgp['dampening']['half_life'] is defined %}
+				set protocols bgp parameters dampening half-life {{ bgp['dampening']['half_life'] }}
+			{% else %}
+				delete protocols bgp parameters dampening half-life
+			{% endif %}
+			{% if bgp ['dampening']['max_suppress_time'] is defined %}
+				set protocols bgp parameters dampening max-suppress-time {{ bgp['dampening']['max_suppress_time'] }}
+			{% else %}
+				delete protocols bgp parameters dampening max-suppress-time
+			{% endif %}
+			{% if bgp['dampening']['start_suppress_time'] is defined %}
+				set protocols bgp parameters dampening start-suppress-time {{ bgp['dampening']['start_suppress_time'] }}
+			{% else %}
+				delete protocols bgp parameters dampening start-suppress-time
+			{% endif %}
+		{% endif %}
+		{% if bgp['dampening'] == false %}
+			delete protocols bgp parameters dampening
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters dampening
+	{% endif %}
+
+	{% if bgp['default'] is defined %}
+		{% if bgp['default'] == true %}
+			set protocols bgp parameters default
+			{% if bgp['default']['local_pref'] is defined %}
+				set protocols bgp parameters default local-pref {{ bgp['default']['local_pref'] }}
+			{% else %}
+				delete protocols bgp parameters default local-pref
+			{% endif %}
+		{% endif %}
+		{% if bgp['default'] == false %}
+			delete protocols bgp parameters default
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters default
+	{% endif %}
+
+	{% if bgp['deterministic_med'] is defined %}
+		{% if bgp['deterministic_med'] == true %}
+			set protocols bgp parameters deterministic-med
+		{% endif %}
+		{% if bgp['deterministic_med'] == false %}
+			delete protocols bgp parameters deterministic-med
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters deterministic-med
+	{% endif %}
+
+	{% if bgp['distance'] is defined %}
+		{% if bgp['distance']['global'] is defined %}
+			{% if bgp['distance']['global']['external'] is defined %}
+				set protocols bgp parameters distance global external {{ bgp['distance']['global']['external'] }}
+			{% else %}
+				delete protocols bgp parameters distance global external
+			{% endif %}
+			{% if bgp['distance']['global']['internal'] is defined %}
+				set protocols bgp parameters distance global internal {{ bgp['distance']['global']['internal'] }}
+			{% else %}
+				delete protocols bgp parameters distance global internal
+			{% endif %}
+			{% if bgp['distance']['global']['local'] is defined %}
+				set protocols bgp parameters distance global local {{ bgp['distance']['global']['local'] }}
+			{% else %}
+				delete protocols bgp parameters distance global local
+			{% endif %}
+		{% else %}
+			delete protocols bgp parameters distance global
+		{% endif %}
+		{% if bgp['distance']['prefix'] is defined %}
+			{% for pfx in bgp['distance']['prefix'] %}
+				set protocols bgp parameters distance prefix {{ pfx['ip_prefix'] }} distance {{ pfx['distance'] }}
+			{% endfor %}
+		{% else %}
+			delete protocols bgp parameters distance prefix
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters distance
+	{% endif %}
+
+	{% if bgp['ebgp_requires_policy'] is defined %}
+		{% if bgp['ebgp_requires_policy'] == true %}
+			set protocols bgp parameters ebgp-requires-policy
+		{% endif %}
+		{% if bgp['ebgp_requires_policy'] == false %}
+			delete protocols bgp parameters ebgp-requires-policy
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters ebgp-requires-policy
+	{% endif %}
+
+	{% if bgp['fast_convergence'] is defined %}
+		{% if bgp['fast_convergence'] == true %}
+			set protocols bgp parameters fast-convergence
+		{% endif %}
+		{% if bgp['fast_convergence'] == false %}
+			delete protocols bgp parameters fast-convergence
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters fast-convergence
+	{% endif %}
+
+	{% if bgp['graceful_restart'] is defined %}
+		{% if bgp['graceful_restart'] == true %}
+			set protocols bgp parameters graceful-restart
+			{% if bgp['graceful_restart']['stalepath_time'] is defined %}
+				set protocols bgp parameters graceful-restart stalepath-time {{ bgp['graceful_restart']['stalepath_time'] }}
+			{% else %}
+				delete protocols bgp parameters graceful-restart stalepath-time
+			{% endif %}
+		{% endif %}
+		{% if bgp['graceful_restart'] == false %}
+			delete protocols bgp parameters graceful-restart
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters graceful-restart
+	{% endif %}
+
+	{% if bgp['graceful_shutdown'] is defined %}
+		{% if bgp['graceful_shutdown'] == true %}
+			set protocols bgp parameters graceful_shutdown
+		{% endif %}
+		{% if bgp['graceful_shutdown'] == false %}
+			delete protocols bgp parameters graceful_shutdown
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters graceful_shutdown
+	{% endif %}
+
+	{% if bgp['log_neighbor_changes'] is defined %}
+		{% if bgp['log_neighbor_changes'] == true %}
+			set protocols bgp parameters log-neighbor-changes
+		{% endif %}
+		{% if bgp['log_neighbor_changes'] == false %}
+			delete protocols bgp parameters log-neighbor-changes
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters log-neighbor-changes
+	{% endif %}
+
+	{% if bgp['minimum_holdtime'] is defined %}
+		set protocols bgp parameters minimum-holdtime {{ bgp['minimum_holdtime'] }}
+	{% else %}
+		delete protocols bgp parameters minimum-holdtime
+	{% endif %}
+
+	{% if bgp['network_import_check'] is defined %}
+		{% if bgp['network_import_check'] == true %}
+			set protocols bgp parameters network-import-check
+		{% endif %}
+		{% if bgp['network_import_check'] == false %}
+			delete protocols bgp parameters network-import-check
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters network-import-check
+	{% endif %}
+
+	{% if bgp['no_client_to_client_reflection'] is defined %}
+		{% if bgp['no_client_to_client_reflection'] == true %}
+			set protocols bgp parameters no-client-to-client-reflection
+		{% endif %}
+		{% if bgp['no_client_to_client_reflection'] == false %}
+			delete protocols bgp parameters no-client-to-client-reflection
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters no-client-to-client-reflection
+	{% endif %}
+
+	{% if bgp['no_fast_external_failover'] is defined %}
+		{% if bgp['no_fast_external_failover'] == true %}
+			set protocols bgp parameters no-fast-external-failover
+		{% endif %}
+		{% if bgp['no_fast_external_failover'] == false %}
+			delete protocols bgp parameters no-fast-external-failover
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters no-fast-external-failover
+	{% endif %}
+
+	{% if bgp['no_suppress_duplicates'] is defined %}
+		{% if bgp['no_suppress_duplicates'] == true %}
+			set protocols bgp parameters no-suppress-duplicates
+		{% endif %}
+		{% if bgp['no_suppress_duplicates'] == false %}
+			delete protocols bgp parameters no-suppress-duplicates
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters no-suppress-duplicates
+	{% endif %}
+
+	{% if bgp['reject_as_sets'] is defined %}
+		{% if bgp['reject_as_sets'] == true %}
+			set protocols bgp parameters reject-as-sets
+		{% endif %}
+		{% if bgp['reject_as_sets'] == false %}
+			delete protocols bgp parameters reject-as-sets
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters reject-as-sets
+	{% endif %}
+
+	{% if bgp['suppress_fib_pending'] is defined %}
+		{% if bgp['suppress_fib_pending'] == true %}
+			set protocols bgp parameters suppress-fib-pending
+		{% endif %}
+		{% if bgp['suppress_fib_pending'] == false %}
+			delete protocols bgp parameters suppress-fib-pending
+		{% endif %}
+	{% else %}
+		delete protocols bgp parameters suppress-fib-pending
+	{% endif %}
+
+	{% if bgp['timers'] is defined %}
+		{% if bgp['timers']['holdtime'] is defined %}
+			set protocols bgp timers holdtime {{ bgp['timers']['holdtime'] }}
+		{% else %}
+			delete protocols bgp timers holdtime
+		{% endif %}
+		{% if bgp['timers']['keepalive'] is defined %}
+			set protocols bgp timers keepalive {{ bgp['timers']['keepalive'] }}
+		{% else %}
+			delete protocols bgp timers keepalive
+		{% endif %}
+	{% else %}
+		delete protocols bgp timers]
+	{% endif %}
+{% endfor %}	
