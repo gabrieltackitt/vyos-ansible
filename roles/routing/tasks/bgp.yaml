@@ -1,6 +1,6 @@
-- name: Configure BGP 
+- name: Configure BGP Parameters
   vyos_config:
-    src: bgp.j2
+    src: bgp_parameters.j2
   when:
     - bgp is defined
   tags:
