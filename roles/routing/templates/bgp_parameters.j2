@@ -34,23 +34,35 @@
 		{% if bgp['bestpath']['as_path'] is defined %}
 			{% if bgp['bestpath']['as_path'] == true %}
 				set protocols bgp parameters bestpath as-path
-				{% if bgp['bestpath']['as_path']['confed'] == true %}
-					set protocols bgp parameters bestpath as-path confed
-				{% endif %}
-				{% if bgp['bestpath']['as_path']['confed'] == false %}
+				{% if bgp['bestpath']['as_path']['confed'] is defined %}
+					{% if bgp['bestpath']['as_path']['confed'] == true %}
+						set protocols bgp parameters bestpath as-path confed
+					{% endif %}
+					{% if bgp['bestpath']['as_path']['confed'] == false %}
+						delete protocols bgp parameters bestpath as-path confed
+					{% endif %}
+				{% else %}
 					delete protocols bgp parameters bestpath as-path confed
-				{% endif %}
-				{% if bgp['bestpath']['as_path']['ignore'] == true %}
-					set protocols bgp parameters bestpath as-path ignore
-				{% endif %}
-				{% if bgp['bestpath']['as_path']['ignore'] == false %}
+				{%endif %}
+				{% if bgp['bestpath']['as_path']['confed'] is defined %}	
+					{% if bgp['bestpath']['as_path']['ignore'] == true %}
+						set protocols bgp parameters bestpath as-path ignore
+					{% endif %}
+					{% if bgp['bestpath']['as_path']['ignore'] == false %}
+						delete protocols bgp parameters bestpath as-path ignore
+					{% endif %}
+				{% else %}
 					delete protocols bgp parameters bestpath as-path ignore
 				{% endif %}
-				{% if bgp['bestpath']['as_path']['multipath_relax'] == true %}
-					set protocols bgp parameters bestpath as-path multipath-relace
-				{% endif %}
-				{% if bgp['bestpath']['as_path']['multipath_relax'] == false %}
-					delete protocols bgp parameters bestpath as-path multipath-relace
+				{% if bgp['bestpath']['as_path']['multipath_relax'] is defined %}
+					{% if bgp['bestpath']['as_path']['multipath_relax'] == true %}
+						set protocols bgp parameters bestpath as-path multipath-relax
+					{% endif %}
+					{% if bgp['bestpath']['as_path']['multipath_relax'] == false %}
+						delete protocols bgp parameters bestpath as-path multipath-relax
+					{% endif %}
+				{% else %}
+					delete protocols bgp parameters bestpath as-path multipath-relax
 				{% endif %}
 			{% endif %}
 			{% if bgp['bestpath']['as_path'] == false %}
