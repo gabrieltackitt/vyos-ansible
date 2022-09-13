@@ -443,9 +443,11 @@ bgp:
     keepalive: <0-65535> ### Set to 0 to disable
 
 bgp_address_family:
-  ipv4_flowspec: <enabled | disabled>
+  ipv4_flowspec: 
+    enabled: <true | false>
     local_install_interface: <interface>
-  ipv4_labeled_unicast: <enabled | disabled>
+  ipv4_labeled_unicast: 
+    enabled: <true | false>
     aggregate-address:
       - prefix: <IPv4 Prefix>
         as_set: <true | false>
@@ -454,8 +456,9 @@ bgp_address_family:
     network:
       - prefix: <IPv4 Prefix>
         backdoor: <true | false>
-        route-map: <route map>
-  ipv4_multicast: <enabled | disabled>
+        route_map: <route map>
+  ipv4_multicast:
+    enabled: <true | false>
     aggregate-address:
       - prefix: <IPv4 Prefix>
         as_set: <true | false>
@@ -473,8 +476,10 @@ bgp_address_family:
         backdoor: <true | false>
         route-map: <route map>
   ipv4_unicast:
+    enabled: <true | false>
     aggregate-address:
       - prefix: <IPv4 Prefix>
+        enabled: <true | false>
         as_set: <true | false>
         route_map: <route map>
         summary_only: <true | false>

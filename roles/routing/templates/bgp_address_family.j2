@@ -1,0 +1,171 @@
+{% for af in bgp_address_family %}
+
+	{% if af['ipv4_flowspec'] is defined %}
+		{% if af['ipv4_flowspec']['enabled'] is defined %}
+			{% if af['ipv4_flowspec']['enabled'] == true %}
+				set protocols bgp address-family ipv4-flowspec
+				{% if af['ipv4_flowspec']['local_install_interface'] is defined %}
+					set protocols bgp address-family ipv4-flowspec local-install interface {{ af['ipv4_flowspec']['local_install_interface'] }}
+				{% endif %}
+			{% endif %}
+			{% if af['ipv4_flowspec']['enabled'] == false %}
+				delete protocols bgp address-family ipv4-flowspec
+			{% endif %}
+		{% else %}
+			delete protocols bgp address-family ipv4-flowspec
+		{% endif %}
+	{% endif %}
+
+	{% if af['ipv4_labeled_unicast'] is defined %}
+		{% if af['ipv4_labeled_unicast']['enabled'] is defined %}
+			{% if af['ipv4_labeled_unicast']['enabled'] == true %}
+				set protocols bgp address-family ipv4-labeled-unicast
+				{% if af['ipv4_labeled_unicast']['aggregate-address'] is defined %}
+					{% for agg in af['ipv4_labeled_unicast']['aggregate-address'] %}
+						set protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }}
+						{% if agg['as_set'] is defined %}
+							{% if agg['as_set'] == true %}
+								set protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} as-set
+							{% endif %}
+							{% if agg['as_set'] == false %}
+								delete protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} as-set
+							{% endif %}
+						{% else %}
+							delete protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} as-set
+						{% endif %}
+						{% if agg['route_map'] is defined %}
+							set protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} route-map {{ agg['route_map'] }}
+						{% else %}
+							delete protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} route-map
+						{% endif %}
+						{% if agg['summary_only'] is defined %}
+							{% if agg['summary_only'] == true %}
+								set protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} summary-only
+							{% endif %}
+							{% if agg['summary_only'] == false %}
+								delete protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} summary-only
+							{% endif %}
+						{% else %}
+							delete protocols bgp address-family ipv4-labeled-unicast aggregate-address {{ agg['prefix'] }} summary-only
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				{% if af['ipv4_labeled_unicast']['network'] is defined %}
+					{% for net in af['ipv4_labeled_unicast']['network'] %}
+						{% if net['enabled'] is defined %}
+							{% if net['enabled'] == true %}
+								set protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }}
+								{% if net['route_map'] is defined %}
+									set protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }} route-map {{ net['route_map'] }}
+								{% else %}
+									delete protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }} route-map
+								{% endif %}
+								{% if net['backdoor'] is defined %}
+									{% if net['backdoor'] == true %}
+										set protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }} backdoor
+									{% endif %}
+									{% if net['backdoor'] == false %}
+										delete protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }} backdoor
+									{% endif %}
+								{% else %}
+									delete protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }} backdoor
+								{% endif %}
+							{% endif %}
+							{% if net['enabled'] == false %}
+								set protocols bgp address-family ipv4-labeled-unicast network {{ net['prefix'] }}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endif %}
+			{% if af['ipv4_labeled_unicast']['enabled'] == false %}
+				delete protocols bgp address-family ipv4-labeled-unicast
+			{% endif %}
+		{% endif %}
+	{% else %}
+		delete protocols bgp address-family ipv4-labeled-unicast
+	{% endif %}
+
+	{% if af['ipv4_multicast'] is defined %}
+		{% if af['ipv4_multicast']['enabled'] is defined %}
+			{% if af['ipv4_multicast']['enabled'] == true %}
+				set protocols bgp address-family ipv4-multicast
+				{% if af['ipv4_multicast']['aggregate-address'] is defined %}
+					{% for agg in af['ipv4_multicast']['aggregate-address'] %}
+						set protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }}
+						{% if agg['as_set'] is defined %}
+							{% if agg['as_set'] == true %}
+								set protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} as-set
+							{% endif %}
+							{% if agg['as_set'] == false %}
+								delete protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} as-set
+							{% endif %}
+						{% else %}
+							delete protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} as-set
+						{% endif %}
+						{% if agg['route_map'] is defined %}
+							set protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} route-map {{ agg['route_map'] }}
+						{% else %}
+							delete protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} route-map
+						{% endif %}
+						{% if agg['summary_only'] is defined %}
+							{% if agg['summary_only'] == true %}
+								set protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} summary-only
+							{% endif %}
+							{% if agg['summary_only'] == false %}
+								delete protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} summary-only
+							{% endif %}
+						{% else %}
+							delete protocols bgp address-family ipv4-multicast aggregate-address {{ agg['prefix'] }} summary-only
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				{% if af['ipv4_multicast']['network'] is defined %}
+					{% for net in af['ipv4_multicast']['network'] %}
+						{% if net['enabled'] is defined %}
+							{% if net['enabled'] == true %}
+								set protocols bgp address-family ipv4-multicast network {{ net['prefix'] }}
+								{% if net['route_map'] is defined %}
+									set protocols bgp address-family ipv4-multicast network {{ net['prefix'] }} route-map {{ net['route_map'] }}
+								{% else %}
+									delete protocols bgp address-family ipv4-multicast network {{ net['prefix'] }} route-map
+								{% endif %}
+								{% if net['backdoor'] is defined %}
+									{% if net['backdoor'] == true %}
+										set protocols bgp address-family ipv4-multicast network {{ net['prefix'] }} backdoor
+									{% endif %}
+									{% if net['backdoor'] == false %}
+										delete protocols bgp address-family ipv4-multicast network {{ net['prefix'] }} backdoor
+									{% endif %}
+								{% else %}
+									delete protocols bgp address-family ipv4-multicast network {{ net['prefix'] }} backdoor
+								{% endif %}
+							{% endif %}
+							{% if net['enabled'] == false %}
+								set protocols bgp address-family ipv4-multicast network {{ net['prefix'] }}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				{% if af['ipv4_multicast']['distance'] is defined %}
+
+
+
+
+
+			{% endif %}
+			{% if af['ipv4_multicast']['enabled'] == false %}
+				delete protocols bgp address-family ipv4-multicast
+			{% endif %}
+		{% endif %}
+	{% else %}
+		delete protocols bgp address-family ipv4-multicast
+	{% endif %}	
+
+
+
+	{% if af['ipv4_unicast'] is defined %}
+		{% if af['ipv4_unicast']['enabled'] is defined %}
+			{% if af['ipv4_unicast']['enabled'] == true %}
+				set protocols bgp address-family ipv4-unicast
+				{%  %}
