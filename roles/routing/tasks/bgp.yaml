@@ -1,3 +1,4 @@
+
 - name: Configure BGP Parameters
   vyos.vyos.vyos_config:
     src: bgp_parameters.j2
