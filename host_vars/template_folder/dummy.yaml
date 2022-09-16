@@ -1,0 +1,9 @@
+dummy:
+  - vyos_if: <interface name>
+    enabled: <true | false>
+    desc: <Interface description>
+    ipv4: <true | false>
+    ipv4_addr: <address>
+    ipv6: <true | false>
+    ipv6_addr: <address>
+    vrf: <default | vrf name>

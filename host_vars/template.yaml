@@ -368,3 +368,897 @@ macsec:
 ### VTI CONFIGURATION ###
 
 vti:
+
+
+
+
+
+### BGP ROUTING CONFIGURATION ###
+bgp:
+  bgp_enabled: <true | false>
+  router_id: <BGP ROUTER ID> ## Defaults to highest IPv4 address of system if not defined
+  system_as: <BGP AS number> ## This value is required
+  route_map: <route-map>
+  listen:
+    limit: <1-5000>
+    range: 
+      - listen_range: <ipv4/ipv6 prefix>
+        peer_group: <peer-group for listen range>
+  bestpath:
+    as_path: 
+      as_path: <true | false>
+      confed: <true | false>
+      ignore: <true | false>
+      multipath_relax: <true | false>
+    bandwidth:
+      default_weight_for_missing: <true | false>
+      ignore: <true | false>
+      skip_missing: <true | false>
+    compare_router_id: <true | false>
+    med: 
+      med: <true | false>
+      confed: <true | false>
+      missing_as_worst: <true | false>
+  cluster_id: <x.x.x.x>
+  conditional_advertisement: 
+    conditional_advertisement: <true | false>
+    timer: <5-240>
+  confederation: 
+    identifier: <confederation AS>
+    peers:
+      - <CONFEDERATION PEER AS>
+  dampening: 
+    dampening: <true | false>
+    half_life: <1-45>
+    max_suppress_time: <1-20000>
+    start_suppress_time: <1-20000>
+  default: 
+    default: <true | false>
+    local_pref: <0-4294967295>
+  deterministic-med: <true | false>
+  distance:
+    global:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+    prefix:
+      - ip_prefix: <IPv4/IPv6 Prefix>
+        distance: <1-255
+  ebgp_requires_policy: <true | false>
+  fast_convergence: <true | false>
+  graceful_restart: 
+    graceful_restart: <true | false>
+    stalepath_time: <1-3600>
+  graceful_shutdown: <true | false>
+  log_neighbor_changes: <true | false>
+  minimum_holdtime: <1-65535>
+  network_import_check: <true | false>
+  no_client_to_client_reflection: <true | false>
+  no_fast_external_failover: <true | false>
+  no_suppress_duplicates: <true | false>
+  reject_as_sets: <true | false>
+  suppress_fib_pending: <true | false>
+  timers:
+    holdtime: <0-65535> ### Set to 0 to disable
+    keepalive: <0-65535> ### Set to 0 to disable
+
+bgp_address_family:
+  ipv4_flowspec: <enabled | disabled>
+    local_install_interface: <interface>
+  ipv4_labeled_unicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv4_multicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv4 prefix>
+          distance: <1-255>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv4_unicast:
+    aggregate-address:
+      - prefix: <IPv4 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv4 prefix>
+          distance: <1-255>
+    export_vpn: <true | false>
+    import_vpn: <true | false>
+    import_vrf: <vrf name>
+    label:
+      vpn_export: <0-1048575 | auto>
+    maximum_paths:
+      ebgp: <1-256>
+      ibpg: <1-256>
+    network:
+      - prefix: <IPv4 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+    rd_vpn_export: <ASN:NN_OR_IP-ADDRESS:NN>
+    redistribute:
+      connected: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      isis: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      kernel: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ospf: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      rip: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      static: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      table: <table number>
+    route_map:
+      vpn_export: <route-map>
+      vpn_import: <route map>
+    route_target:
+      vpn_export: <true | false>
+      vpn_import: <true | false>
+      vpn_both: <true | false>
+  ipv4_vpn:
+    network:
+      - prefix: <IPv4 Prefix>
+        label: <0-1048575>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+  ipv6_flowspec: <enabled | disabled>
+    local_install_interface: <interface>
+  ipv6_labeled_unicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv6_multicast: <enabled | disabled>
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv6 prefix>
+          distance: <1-255>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+  ipv6_unicast:
+    aggregate-address:
+      - prefix: <IPv6 Prefix>
+        as_set: <true | false>
+        route_map: <route map>
+        summary_only: <true | false>
+    distance:
+      external: <1-255>
+      internal: <1-255>
+      local: <1-255>
+      prefix:
+        - prefix: <IPv6 prefix>
+          distance: <1-255>
+    export_vpn: <true | false>
+    import_vpn: <true | false>
+    import_vrf: <vrf name>
+    label:
+      vpn_export: <0-1048575 | auto>
+    maximum_paths:
+      ebgp: <1-256>
+      ibpg: <1-256>
+    network:
+      - prefix: <IPv6 Prefix>
+        backdoor: <true | false>
+        route-map: <route map>
+    rd_vpn_export: <ASN:NN_OR_IP-ADDRESS:NN>
+    redistribute:
+      connected: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      kernel: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ospfv3: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      ripng: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      static: <true | false>
+        metric: <1-4294967295>
+        route_map: <route map>
+      table: <table number>
+    route_map:
+      vpn_export: <route-map>
+      vpn_import: <route map>
+    route_target:
+      vpn_export: <true | false>
+      vpn_import: <true | false>
+      vpn_both: <true | false>
+  ipv6_vpn:
+    network:
+      - prefix: <IPv6 Prefix>
+        label: <0-1048575>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+  l2vpn-evpn:
+    advertise:
+      ipv4_unicast: <true | false>
+          route-map: <route-map>
+      ipv6_unicast: <true | false>
+          route-map: <route-map>
+    advertise-all-vni: <true | false>
+    advertise-default-gw: <true | false>
+    advertise-pip: <prefix>
+    advertise-svi-ip: <true | false>
+    flooding:
+      disable: <true | false>
+      head-end-replication: <true | false>
+    rd: <ASN:NN_OR_IP-ADDRESS:NN>
+    route-target:
+      export: <true | false>
+      import: <true | false>
+      both: <true | false>
+    rt-auto-derive: <true | false>
+    vni: 
+      - vni_number: <1-16777215>
+        advertise-default-gw: <true | false>
+        advertise-svi-ip: <true | false>
+        rd: <ASN:NN_OR_IP-ADDRESS:NN>
+        route-target:
+          export: <true | false>
+          import: <true | false>
+          both: <true | false>
+
+### BGP PEER CONFIGURATION ###
+bgp_peers:
+  - peer_address: <ipv4/ipv6 peer address>
+    remote_as: <peer AS>
+    enabled: <true | false>
+    solo: <true | false>
+    password: <BGP MD5 password>
+    peer_desc: <description>
+    peer_group: <peer-group>
+    capability:
+      dynamic: <true | false>
+      extended-next-hop: <true | false>
+    advertisement_interval: <0-600>
+    disable_capability_negotiation: <true | false>
+    disable_capability_check: <true | false>
+    ebgp_multihop: <number of hops>
+    graceful_restart: <true | false>
+    override_capability: <true | false>
+    passive: <true | false>
+    port: <peer bgp port>
+    strict_capability_match: <true | false>
+    timers:
+      connect: <0-65535>
+      holdtime: <0-65535>
+      keepalive: <0-65535>
+    ttl_security_hops: <1-254>
+    update_source: <source IP address>
+    local_as: <alternate AS to use with this peer>
+      no_prepend: <true | false>
+        replace_as: <true | false>
+    interface:
+      peer_group: <peer-group>
+      remote_as: <peer AS>
+      source_interface: <source interface>
+      v6only: <true | false>
+        peer_group: <peer group>
+        remote_as: <peer AS | external | internal>
+    bfd:
+      profile: <profile name>
+      check_control_plane_failure: <true | false>
+    address_family:
+      ipv4_flowspec: <true | false>
+        filter_list:
+          export: <AS-PATH-LIST>
+          import: <AS-PATH-LIST>
+        prefix_list:
+          export: <PREFIX LIST>
+          import: <PREFIX LIST>
+        route_map:
+          export: <route-map>
+          import: <route-map>
+        route_reflector_client: <true | false>
+        route_server_client: <true | false>
+        soft_reconfiguration: <true | false>
+          inbound: <true | false>
+      ipv4_labeled_unicast: <true | false>
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv4-multicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv4-unicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv4-vpn:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-flowspec:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-labeled-unicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-multicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-unicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-vpn:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      l2vpn-evpn:
+        allowas-in: <true | false>
+          number: <1-10>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        next-hop-self: <true | false>
+          force: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+
+### BGP PEER GROUP CONFIGURATION ###
+bgp_peer_groups:
+  - peer_group_name: <peer group name>
+    remote_as: <peer AS>
+    enabled: <true | false>
+    password: <BGP MD5 password>
+    peer_group_desc: <description>
+    capability:
+      dynamic: <true | false>
+      extended-next-hop: <true | false>
+    disable_capability_negotiation: <true | false>
+    disable_capability_check: <true | false>
+    ebgp_multihop: <number of hops>
+    graceful_restart: <true | false>
+    override_capability: <true | false>
+    passive: <true | false>
+    ttl_security_hops: <1-254>
+    update_source: <source IP address>
+    local_as: <alternate AS to use with this peer>
+      no_prepend: <true | false>
+        replace_as: <true | false>
+    bfd:
+      profile: <profile name>
+      check_control_plane_failure: <true | false>
+    address_family:
+      ipv4-unicast:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      ipv6-vpn:
+        addpath-tx-all: <true | false>
+        addpath-tx-per-as: <true | false>
+        allowas-in: <true | false>
+          number: <1-10>
+        as-override: <true | false>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        capability: <true | false>
+          orf: <true | false>
+            prefix-list: <true | false>
+              send: <true | false>
+              recieve: <true | false>
+        conditionally-advertise: 
+          advertise-map: <route-map>
+          exist-map: <route-map>
+          non-exist-map: <route-map>
+        default-originate: <true | false>
+        disable-send-community:
+            standard: <true | false>
+            extended: <true | false>
+        distribute-list:
+          export: <Access-list number>
+          import: <Access-list number>
+        filter-list:
+          export: <AS PATH list>
+          import: <AS PATH list>
+        maximum-prefix: <#####>
+        maximum-prefix-out: <#####>
+        next-hop-self: <true | false>
+          force: <true | false>
+         prefix-list:
+            export: <prefix list>
+            import: <prefix list>
+        remove-private-as: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>
+        unsuppress-map: <route-map>
+        weight: <1-65535>
+      l2vpn-evpn:
+        allowas-in: <true | false>
+          number: <1-10>
+        attribute-unchanged: <true | false>
+          as-path: <true | false>
+          med: <true | false>
+          next-hop: <true | false>
+        next-hop-self: <true | false>
+          force: <true | false>
+        route-map:
+          export: <route-map>
+          import: <route-map>
+        route-reflector-client: <true | false>
+        route-server-client: <true | false>
+        soft-reconfiguration: <true | false>
+          inbound: <true | false>

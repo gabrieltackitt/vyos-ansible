@@ -1,0 +1,886 @@
+address-family
+   ipv4-flowspec
+      local-install
+         interface
+   ipv4-labeled-unicast
+      aggregate-address <IPv4 Prefix>
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      network <IPv4 Prefix>
+         backdoor <t/f>
+         route-map <route-map>
+   ipv4-multicast
+      aggregate-address
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      distance
+         external <1-255>
+         internal <1-255>
+         local <1-255>
+         prefix <IPv4 prefix>
+            distance <1-255>
+      network <IPv4 Prefix>
+         backdoor <t/f>
+         route-map <route-map>
+
+   ipv4-unicast
+      aggregate-address <IPv4 Prefix>
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      distance
+         external <1-255>
+         internal <1-255>
+         local <1-255>
+         prefix <IPv4-Prefix>
+            distance <1-255>
+      export
+         vpn <t/f>
+      import
+         vpn <t/f>
+         vrf <vrf-name>
+      label
+         vpn
+            export <0-1048575 | auto>
+      maximum-paths
+         ebgp <1-256>
+         ibgp <1-256>
+      network <IPv4 Prefix>
+         backdoor
+         route-map 
+      rd
+         vpn 
+            export <ASN:NN_OR_IP-ADDRESS:NN>
+      redistribute
+         connected <t/f>
+            metric <1-4294967295>
+            route-map <route-map>
+         isis
+            metric <1-4294967295>
+            route-map <route-map>
+         kernel
+            metric <1-4294967295>
+            route-map <route-map>
+         ospf
+            metric <1-4294967295>
+            route-map <route-map>
+         rip
+            metric <1-4294967295>
+            route-map <route-map>
+         static
+            metric <1-4294967295>
+            route-map <route-map>
+         table <table-name>
+      route-map
+         vpn
+            export <route-map>
+            import <route-map>
+      route-target
+         vpn
+            export
+            import
+            both
+   ipv4-vpn
+      network <IPv4 Prefix>
+         label <0-1048575>
+         rd <ASN:NN_OR_IP-ADDRESS:NN>
+
+   ipv6-flowspec
+      local-install
+         interface
+   ipv6-labeled-unicast
+      aggregate-address <IPv4 Prefix>
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      network <IPv4 Prefix>
+         backdoor <t/f>
+         route-map <route-map>
+   ipv6-multicast
+      aggregate-address
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      distance
+         external <1-255>
+         internal <1-255>
+         local <1-255>
+         prefix <IPv4 prefix>
+            distance <1-255>
+      network <IPv4 Prefix>
+         backdoor <t/f>
+         route-map <route-map>
+   ipv6-unicast
+      aggregate-address <IPv4 Prefix>
+         as-set <t/f>
+         route-map <route-map>
+         summary-only <t/f>
+      distance
+         external <1-255>
+         internal <1-255>
+         local <1-255>
+         prefix <IPv4-Prefix>
+            distance <1-255>
+      export
+         vpn <t/f>
+      import
+         vpn <t/f>
+         vrf <vrf-name>
+      label
+         vpn
+            export <0-1048575 | auto>
+      maximum-paths
+         ebgp <1-256>
+         ibgp <1-256>
+      network <IPv4 Prefix>
+         backdoor
+         route-map 
+      rd
+         vpn 
+            export <ASN:NN_OR_IP-ADDRESS:NN>
+      redistribute
+         connected <t/f>
+            metric <1-4294967295>
+            route-map <route-map>
+         isis
+            metric <1-4294967295>
+            route-map <route-map>
+         kernel
+            metric <1-4294967295>
+            route-map <route-map>
+         ospf
+            metric <1-4294967295>
+            route-map <route-map>
+         rip
+            metric <1-4294967295>
+            route-map <route-map>
+         static
+            metric <1-4294967295>
+            route-map <route-map>
+         table <table-name>
+      route-map
+         vpn
+            export <route-map>
+            import <route-map>
+      route-target
+         vpn
+            export
+            import
+            both
+   ipv6-vpn
+      network <IPv4 Prefix>
+         label <0-1048575>
+         rd <ASN:NN_OR_IP-ADDRESS:NN>
+   l2vpn-evpn
+      advertise
+         ipv4
+            unicast
+               route-map <route-map>
+         ipv6
+            unicast
+               route-map <route-map>
+
+      advertise-all-vni <t/f>
+      advertise-default-gw <t/f>
+      advertise-pip <prefix>
+      advertise-svi-ip <t/f>
+      flooding
+         disable
+         head-end-replication
+      rd <ASN:NN_OR_IP-ADDRESS:NN>
+      route-target
+         export
+         import
+         both
+      rt-auto-derive <t/f>
+      vni <1-16777215>
+         advertise-default-gw <t/f>
+         advertise-svi-ip <t/f>
+         rd <ASN:NN_OR_IP-ADDRESS:NN>
+         route-target
+            export
+            import
+            both
+
+listen
+   limit <1-5000>
+   range <ipv4/ipv6 prefix>
+      peer-group <peer-group>
+
+neighbor <neighbor address>
+   address-family
+      ipv4-flowspec
+         filter-list
+            export <AS-PATH-LIST>
+            import <AS-PATH-LIST>
+         prefix-list
+            export <PREFIX-LIST>
+            import <PREFIX-LIST>
+         route-map
+            export <route-map>
+            import <route-map>
+         route-reflector-client <t/f>
+         route-server-client <t/f>
+         soft-reconfiguration <t/f>
+            inbound <t/f>
+      ipv4-labeled-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv4-multicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv4-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv4-vpn
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-flowspec
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-labeled-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-multicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-vpn
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      l2vpn-evpn
+         allowas-in
+            number <1-10>
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         next-hop-self <t/f>
+            force <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+   advertisement-interval <0-600>
+   bfd
+      check-control-plane-failure <t/f>
+      profile <PROFILE NAME>
+   capability
+      dynamic
+      extended-next-hop
+   description
+   disable-capability-negotiation
+   disable-connected-check
+   ebgp-multihop
+   graceful-restart
+   interface
+      peer-group <peer-group>
+      remote-as <ASN>
+      source-interface <interface>
+      v6only <t/f>
+         peer-group <peer-group>
+         remote-as <AS | external | internal>
+   local-as <AS number>
+      no-prepend <t/f>  ## Must be set to true for replace-as
+         replace-as <t/f>
+   override-capability
+   passive
+   password
+   peer-group
+   port
+   remote-as
+   shutdown
+   solo
+   strict-capability-match
+   timers
+      connect <0-65535>
+      holdtime <0-65535>
+      keepalive <0-65535>
+   ttl-security
+      hops <1-254>
+   update-source
+
+parameters
+   always-compare-med
+   bestpath
+      as-path
+         confed <T/F>
+         ignore <T/F>
+         multipath-relax <T/F>
+      bandwidth
+      compare-routerid
+      med
+         confed <t/f>
+         missing-as-worst <t/f>
+   cluster-id
+   conditional-advertisement
+      timer <5-240> ## DEF 60
+   confederation
+      identifier <CONFED AS>
+      peers ## AS NUMBERS LIST
+   dampening
+      half-life <1-45> ## IN MINUTES
+      max-suppress-time <1-255> ## IN MINUTES
+      re-use <1-20000> ## penalty points
+      start-suppress-time <1-20000> ## penalty points
+   default
+      local-pref <0-4294967295>
+   deterministic-med
+   distance
+      global
+         external <1-255>
+         internal <1-255>
+         local <1-255>
+      prefix <PREFIX>
+
+   ebgp-requires-policy
+   fast-convergence
+   graceful-restart
+      stalepath-time <1-3600> ## holdtime in seconds
+   graceful-shutdown
+   log-neighbor-changes
+   minimum-holdtime
+   network-import-check
+   no-client-to-client-reflection
+   no-fast-external-failover
+   no-suppress-duplicates
+   reject-as-sets
+   router-id
+   shutdown
+   suppress-fib-pending
+
+peer-group
+   address-family
+      ipv4-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      ipv6-unicast
+         addpath-tx-all
+         addpath-tx-per-as <t/f>
+         allowas-in
+            number <1-10>
+         as-override 
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         capability
+            orf
+               prefix-list
+                  send <t/f>
+                  recieve <t/f>
+         conditionally-advertise
+            advertise-map <route-map>
+            exist-map <route-map>
+            non-exist-map <route-map>
+         default-originate <t/f>
+         disable-send-community
+            standard <t/f>
+            extended <t/f>
+         distribute-list
+            export <Access-list number>
+            import <Access-list number>
+         filter-list
+            export <AS PATH list>
+            import <AS PATH list>
+         maximum-prefix <#####>
+         maximum-prefix-out <#####>
+         next-hop-local <t/f>
+         next-hop-self <t/f>
+            force <t/f>
+         prefix-list
+            export
+            import
+         remove-private-as <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+         unsuppress-map <route-map>
+         weight <1-65535>
+      l2vpn-evpn
+         allowas-in
+            number <1-10>
+         attribute-unchanged
+            as-path <t/f>
+            med <t/f>
+            next-hop <t/f>
+         next-hop-self <t/f>
+            force <t/f>
+         route-map
+            export
+            import
+         route-reflector-client
+         route-server-client
+         soft-reconfiguration
+            inbound <t/f>
+   bfd
+      check-control-plane-failure <t/f>
+      profile <PROFILE NAME>
+   capability
+      dynamic
+      extended-next-hop
+   description
+   disable-capability-negotiation
+   disable-connected-check
+   ebgp-multihop
+   graceful-restart
+   local-as <AS number
+      no-prepend <t/f>  ## Must be set to true for replace-as
+         replace-as <t/f>
+   override-capability
+   passive
+   password
+   remote-as
+   shutdown
+   ttl-security
+      hops <1-254>
+   update-source
+
+route-map
+
+system-as
+
+timers
+   holdtime <0-65535> ## Set to 0 for disabled
+   keepalive <1-65535>
