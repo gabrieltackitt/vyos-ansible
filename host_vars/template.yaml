@@ -448,6 +448,7 @@ bgp_address_family:
     local_install_interface: <interface>
   ipv4_labeled_unicast: 
     enabled: <true | false>
+
     aggregate-address:
       - prefix: <IPv4 Prefix>
         as_set: <true | false>
