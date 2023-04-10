@@ -1,4 +1,7 @@
 {% for eth in ethernet %}
+{% if eth['delete'] == yes %}
+	delete interfaces ethernet {{ eth['vyos_if'] }}
+{% else %}
 {% if eth['vlan'] is not defined %}
 	set interfaces ethernet {{ eth['vyos_if'] }} description {{ eth['desc'] }}
 {% if eth['enabled'] is sameas false %}
@@ -540,5 +543,5 @@
 {% endif %}
 {% endif %}
 {% endif %}
-
+{% endif %}
 {% endfor %}
