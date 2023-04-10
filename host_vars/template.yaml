@@ -214,12 +214,15 @@ bridge:
 
 dummy:
   - vyos_if: <interface name>
-    enabled: <true | false>
+  ### Required Parameters ###
     desc: <Interface description>
-    ipv4: <true | false>
-    ipv4_addr: <address>
+    enabled: <true | false>   # Setting this to true will disable this interface, but leaves the configuration intact on the device
+    delete: <yes | no>   # Setting this to yes will delete the entire dummy interface within vyos
+  ### Optional Parameters ###
+    ipv4: <true | false> 
+    ipv4_addr: <address>   # Required if ipv4: is defined
     ipv6: <true | false>
-    ipv6_addr: <address>
+    ipv6_addr: <address>   # Required if ipv4: is defined
     vrf: <default | vrf name>
 
 ### TUNNEL CONFIGURATIONS ###
