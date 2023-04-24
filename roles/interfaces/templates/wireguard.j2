@@ -1,14 +1,13 @@
 {% for wg in wireguard %}
 {% if wg['desc'] is defined %}
-	set interfaces wireguard {{ wg['vyos_if'] }} description {{ wg['desc'] }}
+	set interfaces wireguard {{ wg['vyos_if'] }} description '{{ wg['desc'] }}'
 {% endif %}
-{% if wg['enabled'] == false %}
+{% if wg['enabled'] is false %}
 	set interfaces wireguard {{ wg['vyos_if'] }} disable
 {% endif %}
-{% if wg['enabled'] == true %}
+{% if wg['enabled'] is true %}
 	delete interfaces wireguard {{ wg['vyos_if'] }} disable
 {% endif %}
-
 	set interfaces wireguard {{ wg['vyos_if'] }} private-key {{ wg['private_key'] }}
 {% if wg['port'] is defined %}
 	set interfaces wireguard {{ wg['vyos_if'] }} port {{ wg['port'] }}
