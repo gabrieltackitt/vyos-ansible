@@ -20,7 +20,7 @@ ethernet:
   - vyos_if: <interface name>
     vlan: <vlan ID> # By setting a VLAN ID, all of the following settings apply only to that VLAN
     enabled: <true | false>   # Setting this to true will disable this interface, but leaves the configuration intact on the device
-    delete: <yes | no>   # Setting this to yes will delete the entire dummy interface within vyos
+    delete: <true | false>   # Setting this to true will delete the entire dummy interface within vyos
 #    vrf: <default | vrf>
     desc: <interface description>
 #    duplex: <auto | full | half> # Defaults to auto if not defined
