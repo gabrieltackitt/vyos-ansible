@@ -1,0 +1,10 @@
+wireguard:
+  - vyos_if: <interface name>
+    enabled: <true | false>   # Setting this to true will disable this interface, but leaves the configuration intact on the device
+    delete: <true | false>   # Setting this to true will delete the entire dummy interface within vyos
+    desc: <interface description>
+    private-key: <wireguard interface private key>
+    ipv4: <true | false>
+    ipv4_addr:
+    ipv6: <true | false>
+    ipv6_addr:
