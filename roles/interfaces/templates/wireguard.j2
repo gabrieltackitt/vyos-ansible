@@ -2,7 +2,6 @@
 {% if wg['desc'] is defined %}
 	set interfaces wireguard {{ wg['vyos_if'] }} description {{ wg['desc'] }}
 {% endif %}
-
 {% if wg['enabled'] == false %}
 	set interfaces wireguard {{ wg['vyos_if'] }} disable
 {% endif %}
