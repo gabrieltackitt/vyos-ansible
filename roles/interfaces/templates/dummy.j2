@@ -1,19 +1,19 @@
 {% for dummy in dummy %}
-{% if dummy['delete'] == yes %}
+{% if dummy['delete'] is true %}
 	delete interfaces dummy {{ dummy['vyos_if'] }}
 {% else %}
 	set interfaces dummy {{ dummy['vyos_if'] }} description '{{ dummy['desc'] }}'
-{% if dummy['enabled'] == false %}
+{% if dummy['enabled'] is false %}
 	set interfaces dummy {{ dummy['vyos_if'] }} disable
 {% else %}
 	delete interfaces dummy {{ dummy['vyos_if'] }} disable
 {% endif %}
-{% if dummy['ipv4'] == true %}
+{% if dummy['ipv4'] is true %}
 	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv4_addr'] }}'
 {% else %}
 	delete interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv4_addr'] }}'
 {% endif %}
-{% if dummy['ipv6'] == true %}
+{% if dummy['ipv6'] is true %}
 	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv6_addr'] }}'
 (% else %)
 	delete interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv6_addr'] }}'
