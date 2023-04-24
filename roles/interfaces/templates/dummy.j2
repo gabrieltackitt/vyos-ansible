@@ -15,7 +15,7 @@
 {% endif %}
 {% if dummy['ipv6'] is true %}
 	set interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv6_addr'] }}'
-(% else %)
+{% else %}
 	delete interfaces dummy {{ dummy['vyos_if'] }} address '{{ dummy['ipv6_addr'] }}'
 {% endif %}
 {% if dummy['vrf'] is defined %}
