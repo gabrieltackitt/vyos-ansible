@@ -4,7 +4,38 @@ wireguard:
     delete: <true | false>   # Setting this to true will delete the entire dummy interface within vyos
     desc: <interface description>
     private-key: <wireguard interface private key>
+    port: <wireguard port>
     ipv4: <true | false>
-    ipv4_addr:
+    ipv4_addr: 
+      - <address | dhcp>
     ipv6: <true | false>
-    ipv6_addr:
+    ipv6_addr: 
+      - <address | dhcpv6>
+    mtu: <MTU>
+    vrf: <default | vrf name>
+    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+    arp_cache_timeout: 30 # Time in seconds
+    disable_arp_filter: <true | false>
+    ipv4_disable_forwarding: <true | false>
+    enable_arp_accept: <true | false>
+    enable_arp_announce: <true | false>
+    enable_arp_ignore: <true | false>
+    enable_proxy_arp: <true | false>
+    proxy_arp_pvlan: <true | false>
+    source_validation_mode: <strict | loose | disable>
+    ipv6_address_autoconf: <true | false>
+    ipv6_address_eui64: <prefix>
+    ipv6_no_default_link_local: <true | false>
+    ipv6_disable_forwarding: <true | false>
+    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
+    peers:
+      - peer_name: <peer name>
+        peer_desc: <peer description>
+        peer_enabled: <true | false>
+        peer_endpoint_address: <peer address>
+        peer_endpoint_port: <peer port>
+        peer_public_key: <peer public key>
+        peer_preshared_key: <preshared key, or ansible secret>
+        peer_allowed_ips:
+          - <allowed ip>
+        peer_persistent_keepalive: <time in seconds>
