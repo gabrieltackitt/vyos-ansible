@@ -15,6 +15,7 @@
 {% if eth['mac'] is defined %}
 	set interfaces ethernet {{ eth['vyos_if'] }} mac '{{ eth['mac'] }}'
 {% endif %}
+{% if eth['duplex'] is defined %}
 {% if eth['duplex'] == 'auto' %}
 	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'auto'
 {% endif %}
@@ -23,6 +24,7 @@
 {% endif %}
 {% if eth['duplex'] == 'half' %}
 	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'half'
+{% endif %}
 {% endif %}
 {% if eth['duplex'] is not defined %}
 	set interfaces ethernet {{ eth['vyos_if'] }} duplex 'auto'
