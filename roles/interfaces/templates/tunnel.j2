@@ -2,7 +2,7 @@
 {% if tunnel['delete'] is true %}
 	delete interfaces tunnel {{ tunnel['vyos_if'] }}
 {% else %}
-	set interfaces tunnel {{ tunnel['vyos_if'] }} description '{{ tunnel['description'] }}'
+	set interfaces tunnel {{ tunnel['vyos_if'] }} description '{{ tunnel['desc'] }}'
 	set interfaces tunnel {{ tunnel['vyos_if'] }} encapsulation '{{ tunnel['tun_encapsulation'] }}'
 	set interfaces tunnel {{ tunnel['vyos_if'] }} remote '{{ tunnel['tun_remote_address'] }}'
 	set interfaces tunnel {{ tunnel['vyos_if'] }} source-address '{{ tunnel['tun_remote_address'] }}'
