@@ -230,20 +230,26 @@ dummy:
 
 tunnel:
   - vyos_if: <interface name>
+    
+    ### Required Parameters
     enabled: <true | false>
+    delete: <true | false>
     desc: <Interface description>
     tun_encapsulation: <ipip | ip6ip6 | ipip6 | sit | gre | gretap | ip6gre | ip6gretap>
     tun_remote_address: <address>
     tun_source_address: <address>
-    tun_ip_key: <numerical tunnel identifier>
+    
+    ### Optional Parameters
+    tun_source_address: <address>
+    tun_source_interface: <interface>
     mac: <xx:xx:xx:xx:xx:xx>
     mtu: <MTU>
     ipv4: <true | false>
-    ipv4_addr: <address>
+    ipv4_addr:
+      - <address>
     ipv6: <true | false>
-    ipv6_addr: <address>
-    vrf: <default | vrf name>
-    disable_flow_control: <true | false>
+    ipv6_addr:
+      - <address>
     disable_link_detect: <true | false>
     ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
     arp_cache_timeout: 30 # Time in seconds

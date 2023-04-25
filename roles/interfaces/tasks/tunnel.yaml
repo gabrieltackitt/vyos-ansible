@@ -1,0 +1,9 @@
+- name: Configure Tunnel Interfaces
+  vyos_config:
+    src: tunnel.j2
+  when:
+    - tunnel is defined
+  tags:
+    - tunnel
+    - tunnel_v4
+    - tunnel_v6

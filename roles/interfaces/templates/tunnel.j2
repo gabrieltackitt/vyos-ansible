@@ -1,0 +1,66 @@
+{% for tunnel in tunnel %}
+{% if tunnel['delete'] is true %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }}
+{% else %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} description '{{ tunnel['description'] }}'
+	set interfaces tunnel {{ tunnel['vyos_if'] }} encapsulation '{{ tunnel['tun_encapsulation'] }}'
+	set interfaces tunnel {{ tunnel['vyos_if'] }} remote '{{ tunnel['tun_remote_address'] }}'
+	set interfaces tunnel {{ tunnel['vyos_if'] }} source-address '{{ tunnel['tun_remote_address'] }}'
+{% if tunnel['enabled'] is false %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} disable
+{% else %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} disable
+{% endif %}
+{% if tunnel['tun_source_address'] is defined %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} source-address '{{ tunnel['tun_remote_address'] }}'
+{% else %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} source-address
+{% endif %}
+{% if tunnel['tun_source_interface'] is defined %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} source-interface '{{ tunnel['tun_remote_interface'] }}'
+{% else %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} source-interface
+{% endif %}
+{% if tunnel['mtu'] is defined %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} mtu '{{ tunnel['mtu'] }}'
+{% else %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} mtu
+{% endif %}
+{% if tunnel['ipv4'] is defined %}
+{% if tunnel['ipv4'] is true %}
+{% for ipv4addr in tunnel['ipv4_addr'] %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv4addr }}
+{% endfor %}
+{% else %}
+{% for ipv4addr in tunnel['ipv4_addr'] %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv4addr }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if tunnel['ipv6'] is defined %}
+{% if tunnel['ipv6'] is true %}
+{% for ipv6addr in tunnel['ipv6_addr'] %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv6addr }}
+{% endfor %}
+{% else %}
+{% for ipv4addr in tunnel['ipv4_addr'] %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv6addr }}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% if tunnel['disable_link_detect'] is defined %}
+{% if tunnel['disable_link_detect'] is true %}
+	set interfaces tunnel {{ tunnel['vyos_if'] }} ip disable-link-detect
+{% endif %}
+{% if tunnel['disable_link_detect'] is false %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} ip disable-link-detect
+{% endif %}
+{% else %}
+	delete interfaces tunnel {{ tunnel['vyos_if'] }} ip disable-link-detect
+{% endif %}
+
+
+
+{% endif %}
+{% endfor %}
