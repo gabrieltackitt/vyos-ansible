@@ -242,7 +242,6 @@ tunnel:
     ### Optional Parameters
     tun_source_address: <address>
     tun_source_interface: <interface>
-    mac: <xx:xx:xx:xx:xx:xx>
     mtu: <MTU>
     ipv4: <true | false>
     ipv4_addr:

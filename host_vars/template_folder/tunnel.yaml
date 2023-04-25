@@ -1,0 +1,38 @@
+tunnel:
+  - vyos_if: <interface name>
+    
+    ### Required Parameters
+    enabled: <true | false>
+    delete: <true | false>
+    desc: <Interface description>
+    tun_encapsulation: <ipip | ip6ip6 | ipip6 | sit | gre | gretap | ip6gre | ip6gretap>
+    tun_remote_address: <address>
+    tun_source_address: <address>
+    
+    ### Optional Parameters
+    tun_source_address: <address>
+    tun_source_interface: <interface>
+    mtu: <MTU>
+    ipv4: <true | false>
+    ipv4_addr:
+      - <address>
+    ipv6: <true | false>
+    ipv6_addr:
+      - <address>
+    disable_link_detect: <true | false>
+    ipv4_adjust_mss: <mss | clamp-mss-to-pmtu>
+    arp_cache_timeout: 30 # Time in seconds
+    disable_arp_filter: <true | false>
+    ipv4_disable_forwarding: <true | false>
+    enable_directed_broadcast: <true | false>
+    enable_arp_accept: <true | false>
+    enable_arp_announce: <true | false>
+    enable_arp_ignore: <true | false>
+    enable_proxy_arp: <true | false>
+    proxy_arp_pvlan: <true | false>
+    source_validation: <strict | loose | disable>
+    ipv6_address_autoconf: <true | false>
+    ipv6_address_eui64: <prefix>
+    ipv6_no_default_link_local: <true | false>
+    ipv6_disable_forwarding: <true | false>
+    ipv6_adjust_mss: <mss | clamp-mss-to-pmtu>
