@@ -11,3 +11,6 @@
 
 - name: 'Configure Wireguard Interfaces'
   include_tasks: wireguard.yaml
+
+- name: 'Configure Tunnel Interfaces'
+  include_tasks: tunnel.yaml
