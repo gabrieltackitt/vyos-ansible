@@ -43,7 +43,7 @@
 	set interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv6addr }}
 {% endfor %}
 {% else %}
-{% for ipv4addr in tunnel['ipv4_addr'] %}
+{% for ipv6addr in tunnel['ipv6_addr'] %}
 	delete interfaces tunnel {{ tunnel['vyos_if'] }} address {{ ipv6addr }}
 {% endfor %}
 {% endif %}
